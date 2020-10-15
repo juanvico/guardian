@@ -23,3 +23,5 @@ config :guardian, GuardianWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :guardian, GuardianWeb.Mailer, adapter: Bamboo.TestAdapter

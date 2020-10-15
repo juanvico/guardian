@@ -23,6 +23,12 @@ defmodule GuardianWeb.Router do
     live "/", PageLive, :index
   end
 
+  scope "/api/v1", GuardianWeb.Api.V1, as: :api_v1 do
+    pipe_through :api
+
+    resources "/errors", ErrorController, only: [:create]
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", GuardianWeb do
   #   pipe_through :api
