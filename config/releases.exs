@@ -17,3 +17,8 @@ config :guardian, Guardian.Repo,
   database: db_instance,
   pool_size: 15,
   show_sensitive_data_on_connection_error: true
+
+# Mailer
+config :guardian, GuardianWeb.Mailer,
+  adapter: Bamboo.SendGridAdapter,
+  api_key: System.fetch_env!("SEND_GRID_API_KEY")
