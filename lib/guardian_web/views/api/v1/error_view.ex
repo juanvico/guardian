@@ -15,8 +15,7 @@ defmodule GuardianWeb.Api.V1.ErrorView do
       id: error.id,
       title: error.title,
       description: error.description,
-      severity: error.severity,
-      assigned_developer: error.assigned_developer
+      severity: error.severity
     }
   end
 end

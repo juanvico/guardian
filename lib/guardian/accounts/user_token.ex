@@ -37,11 +37,12 @@ defmodule Guardian.Accounts.UserToken do
   The query returns the user found by the token.
   """
   def verify_session_token_query(token) do
+    valid_token = token_and_context_query(token, "session")
+
     query =
-      from token in token_and_context_query(token, "session"),
-        join: user in assoc(token, :user),
-        where: token.inserted_at > ago(@session_validity_in_days, "day"),
-        select: user
+      from users in Guardian.Accounts.User,
+        join: tokens in ^valid_token,
+        where: tokens.inserted_at > ago(@session_validity_in_days, "day")
 
     {:ok, query}
   end

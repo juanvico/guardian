@@ -20,7 +20,7 @@ defmodule Guardian.MixProject do
   def application do
     [
       mod: {Guardian.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
@@ -48,9 +48,9 @@ defmodule Guardian.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:bamboo, "~> 1.6"},
+      {:torch, "~> 3.4"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phx_gen_auth, "~> 0.5", only: :dev, runtime: false}
-
     ]
   end
 

@@ -13,6 +13,10 @@ defmodule GuardianWeb.Router do
     plug :fetch_current_user
   end
 
+  pipeline :ensure_browser_authenticated do
+    plug GuardianWeb.Plugs.EnsureAuthenticated
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -27,6 +31,12 @@ defmodule GuardianWeb.Router do
     pipe_through :api
 
     resources "/errors", ErrorController, only: [:create]
+  end
+
+  scope "/admin", GuardianWeb.Admin, as: :admin do
+    pipe_through [:browser, :ensure_browser_authenticated]
+
+    resources "/errors", ErrorController
   end
 
   # Other scopes may use custom stacks.

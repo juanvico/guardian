@@ -231,7 +231,10 @@ defmodule Guardian.Accounts do
   """
   def get_user_by_session_token(token) do
     {:ok, query} = UserToken.verify_session_token_query(token)
-    Repo.one(query)
+
+    query
+    |> preload(:company)
+    |> Repo.one()
   end
 
   @doc """
@@ -349,5 +352,11 @@ defmodule Guardian.Accounts do
       {:ok, %{user: user}} -> {:ok, user}
       {:error, :user, changeset, _} -> {:error, changeset}
     end
+  end
+
+  def organization_users(%Company{id: organization_id} = organization) do
+    User
+    |> where(company_id: ^organization_id)
+    |> Repo.all()
   end
 end

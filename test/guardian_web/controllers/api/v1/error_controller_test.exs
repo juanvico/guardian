@@ -2,13 +2,12 @@ defmodule GuardianWeb.Api.V1.ErrorControllerTest do
   use GuardianWeb.ConnCase
 
   @create_attrs %{
-    assigned_developer: "some assigned_developer",
     description: "some description",
     severity: 2,
     title: "some title"
   }
 
-  @invalid_attrs %{assigned_developer: nil, description: nil, severity: nil, title: nil}
+  @invalid_attrs %{description: nil, severity: nil, title: nil}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
@@ -20,7 +19,6 @@ defmodule GuardianWeb.Api.V1.ErrorControllerTest do
 
       assert %{
                "id" => id,
-               "assigned_developer" => "some assigned_developer",
                "description" => "some description",
                "severity" => 2,
                "title" => "some title"
