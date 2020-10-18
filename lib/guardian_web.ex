@@ -22,8 +22,20 @@ defmodule GuardianWeb do
       use Phoenix.Controller, namespace: GuardianWeb
 
       import Plug.Conn
+      alias Plug.Conn
       import GuardianWeb.Gettext
       alias GuardianWeb.Router.Helpers, as: Routes
+
+      def action(conn, _) do
+        args =
+          if function_exported?(__MODULE__, action_name(conn), 3) do
+            [conn, conn.params, conn.assigns.current_user]
+          else
+            [conn, conn.params]
+          end
+
+        apply(__MODULE__, action_name(conn), args)
+      end
     end
   end
 
@@ -66,6 +78,22 @@ defmodule GuardianWeb do
       import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
+    end
+  end
+
+  def email do
+    quote do
+      use Phoenix.View,
+        root: "lib/guardian_web/templates/emails",
+        namespace: GuardianWeb
+
+      import Bamboo.Email
+
+      unquote(view_helpers())
+
+      def email_body(name, format, assigns) when format in [:html, :text] do
+        render_to_string(__MODULE__, "#{Atom.to_string(name)}.#{Atom.to_string(format)}", assigns)
+      end
     end
   end
 

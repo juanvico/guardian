@@ -1,0 +1,33 @@
+<h1>Accept Invitation</h1>
+
+<h3>You've been invited to join <b><%= @organization.name %></b></h3>
+
+<h4>
+  <b>Role:</b> <%= @role %>
+</h4>
+
+<br>
+
+<%= form_for @changeset, Routes.accepted_invitation_path(@conn, :create), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <%= label f, :name %>
+  <%= text_input f, :name, required: true %>
+  <%= error_tag f, :name %>
+
+  <%= label f, :email %>
+  <%= email_input f, :email, required: true %>
+  <%= error_tag f, :email %>
+
+  <%= label f, :password %>
+  <%= password_input f, :password, required: true %>
+  <%= error_tag f, :password %>
+
+  <div>
+    <%= submit "Accept Invitation" %>
+  </div>
+<% end %>

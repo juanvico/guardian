@@ -5,7 +5,7 @@ defmodule Guardian.Accounts do
 
   import Ecto.Query, warn: false
   alias Guardian.Repo
-  alias Guardian.Accounts.{Company, User, UserToken, UserNotifier}
+  alias Guardian.Accounts.{Organization, User, UserToken, UserNotifier}
 
   ## Database getters
 
@@ -73,13 +73,20 @@ defmodule Guardian.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def register_user(user_attrs, company_attrs) do
-    company = Company.changeset(%Company{}, company_attrs)
+  def register_user(user_attrs, organization_attrs) do
+    organization = Organization.changeset(%Organization{}, organization_attrs)
 
     %User{}
     |> User.registration_changeset(user_attrs)
     |> Ecto.Changeset.put_change(:role, :admin)
-    |> Ecto.Changeset.put_change(:company, company)
+    |> Ecto.Changeset.put_change(:organization, organization)
+    |> Repo.insert()
+  end
+
+  def join_through_invitation(organization, attrs) do
+    %User{}
+    |> User.invitation_changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:organization, organization)
     |> Repo.insert()
   end
 
@@ -233,7 +240,7 @@ defmodule Guardian.Accounts do
     {:ok, query} = UserToken.verify_session_token_query(token)
 
     query
-    |> preload(:company)
+    |> preload(:organization)
     |> Repo.one()
   end
 
@@ -354,9 +361,9 @@ defmodule Guardian.Accounts do
     end
   end
 
-  def organization_users(%Company{id: organization_id} = organization) do
+  def organization_users(%Organization{id: organization_id}) do
     User
-    |> where(company_id: ^organization_id)
+    |> where(organization_id: ^organization_id)
     |> Repo.all()
   end
 end

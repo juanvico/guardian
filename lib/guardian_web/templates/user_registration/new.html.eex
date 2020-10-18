@@ -7,11 +7,11 @@
     </div>
   <% end %>
 
-  <%= inputs_for f, :company, fn company -> %>
+  <%= inputs_for f, :organization, fn organization -> %>
     <div class="form-group">
-      <%= label company, :company_name, class: "control-label" %>
-      <%= text_input company, :name, class: "form-control" %>
-      <%= error_tag company, :name %>
+      <%= label organization, :organization_name, class: "control-label" %>
+      <%= text_input organization, :name, class: "form-control" %>
+      <%= error_tag organization, :name %>
     </div>
   <% end %>
 

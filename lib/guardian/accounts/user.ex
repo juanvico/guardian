@@ -2,7 +2,7 @@ defmodule Guardian.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Guardian.Accounts.Company
+  alias Guardian.Accounts.Organization
 
   @derive {Inspect, except: [:password]}
   schema "users" do
@@ -12,7 +12,7 @@ defmodule Guardian.Accounts.User do
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
     field :role, Ecto.Enum, values: [:admin, :developer]
-    belongs_to :company, Company
+    belongs_to :organization, Organization
 
     timestamps()
   end
@@ -29,6 +29,14 @@ defmodule Guardian.Accounts.User do
     user
     |> cast(attrs, [:email, :password, :name])
     |> validate_required([:name])
+    |> validate_email()
+    |> validate_password()
+  end
+
+  def invitation_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:email, :password, :name, :role])
+    |> validate_required([:name, :role])
     |> validate_email()
     |> validate_password()
   end

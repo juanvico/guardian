@@ -32,13 +32,13 @@ defmodule GuardianWeb.Admin.ErrorController do
   end
 
   def new(conn, _params) do
-    users = Accounts.organization_users(conn.assigns.current_user.company)
+    users = Accounts.organization_users(conn.assigns.current_user.organization)
     changeset = ErrorsAdmin.change_error(%Error{})
     render(conn, "new.html", changeset: changeset, organization_users: users)
   end
 
   def create(conn, %{"error" => error_params}) do
-    users = Accounts.organization_users(conn.assigns.current_user.company)
+    users = Accounts.organization_users(conn.assigns.current_user.organization)
 
     case ErrorsAdmin.create_error(error_params) do
       {:ok, error} ->
@@ -58,14 +58,14 @@ defmodule GuardianWeb.Admin.ErrorController do
 
   def edit(conn, %{"id" => id}) do
     error = ErrorsAdmin.get_error!(id)
-    users = Accounts.organization_users(conn.assigns.current_user.company)
+    users = Accounts.organization_users(conn.assigns.current_user.organization)
     changeset = ErrorsAdmin.change_error(error)
     render(conn, "edit.html", error: error, changeset: changeset, organization_users: users)
   end
 
   def update(conn, %{"id" => id, "error" => error_params}) do
     error = ErrorsAdmin.get_error!(id)
-    users = Accounts.organization_users(conn.assigns.current_user.company)
+    users = Accounts.organization_users(conn.assigns.current_user.organization)
 
     case ErrorsAdmin.update_error(error, error_params) do
       {:ok, error} ->

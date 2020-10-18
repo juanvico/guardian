@@ -52,7 +52,7 @@ defmodule Guardian.ErrorsAdminTest do
     end
 
     test "list_errors/0 returns all errors" do
-      %Error{id: id} = error = error_fixture()
+      %Error{id: id} = error_fixture()
       assert [%Error{id: ^id}] = ErrorsAdmin.list_errors()
     end
 

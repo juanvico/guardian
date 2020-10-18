@@ -10,8 +10,7 @@
     <header>
       <section id="torch-account-info">
         <div class="torch-container">
-          <a href="/">user@example.com</a>
-          <a href="/">Logout</a>
+          <%= render "_user_menu.html", assigns %>
         </div>
       </section>
 
@@ -24,6 +23,7 @@
           </div>
           <nav class="torch-nav">
             <%= link "Errors" , to: Routes.admin_error_path(@conn, :index) %>
+            <%= link "Invitations" , to: Routes.admin_invitation_path(@conn, :index) %>
           </nav>
         </div>
       </section>

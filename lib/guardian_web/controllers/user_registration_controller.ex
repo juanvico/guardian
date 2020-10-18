@@ -11,9 +11,9 @@ defmodule GuardianWeb.UserRegistrationController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    %{"company" => company_params} = user_params
+    %{"organization" => organization_params} = user_params
 
-    case Accounts.register_user(user_params, company_params || %{}) do
+    case Accounts.register_user(user_params, organization_params || %{}) do
       {:ok, user} ->
         {:ok, _} =
           Accounts.deliver_user_confirmation_instructions(

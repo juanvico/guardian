@@ -1,5 +1,6 @@
 defmodule GuardianWeb.Api.V1.ErrorControllerTest do
   use GuardianWeb.ConnCase
+  use Bamboo.Test
 
   @create_attrs %{
     description: "some description",
@@ -23,6 +24,19 @@ defmodule GuardianWeb.Api.V1.ErrorControllerTest do
                "severity" => 2,
                "title" => "some title"
              } = json_response(conn, 201)["data"]
+    end
+
+    test "sends an email to all the organization admins", %{conn: conn} do
+      post(conn, Routes.api_v1_error_path(conn, :create), error: @create_attrs)
+
+      assert_delivered_email_matches(%{
+        to: [{_, "juanandresvico8@gmail.com"}],
+        html_body: html_body,
+        subject: "Attention!! New Error!"
+      })
+
+      assert html_body =~ "some title"
+      assert html_body =~ "some description"
     end
 
     test "renders errors when data is invalid", %{conn: conn} do

@@ -37,6 +37,7 @@ defmodule GuardianWeb.Router do
     pipe_through [:browser, :ensure_browser_authenticated]
 
     resources "/errors", ErrorController
+    resources "/invitations", InvitationController, except: [:edit, :update]
   end
 
   # Other scopes may use custom stacks.
@@ -58,6 +59,9 @@ defmodule GuardianWeb.Router do
       pipe_through :browser
       live_dashboard "/dashboard", metrics: GuardianWeb.Telemetry
     end
+
+    # preview emails
+    forward "/sent_emails", Bamboo.SentEmailViewerPlug
   end
 
   ## Authentication routes
@@ -91,5 +95,8 @@ defmodule GuardianWeb.Router do
     get "/users/confirm", UserConfirmationController, :new
     post "/users/confirm", UserConfirmationController, :create
     get "/users/confirm/:token", UserConfirmationController, :confirm
+
+    get "/invitations/:token/accept", AcceptedInvitationController, :new
+    post "/accept_invitation", AcceptedInvitationController, :create
   end
 end

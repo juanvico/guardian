@@ -29,7 +29,7 @@ defmodule GuardianWeb.UserRegistrationControllerTest do
             "email" => email,
             "password" => valid_user_password(),
             "name" => "John",
-            "company" => %{"name" => unique_company_name()}
+            "organization" => %{"name" => unique_organization_name()}
           }
         })
 
@@ -50,7 +50,7 @@ defmodule GuardianWeb.UserRegistrationControllerTest do
           "user" => %{
             "email" => "with spaces",
             "password" => "too short",
-            "company" => %{"name" => unique_company_name()}
+            "organization" => %{"name" => unique_organization_name()}
           }
         })
 

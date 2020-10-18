@@ -6,7 +6,7 @@ defmodule Guardian.AccountsFixtures do
 
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
   def valid_user_password, do: "hello world!"
-  def unique_company_name, do: "company #{System.unique_integer()}"
+  def unique_organization_name, do: "organization #{System.unique_integer()}"
 
   def user_fixture(attrs \\ %{}) do
     {:ok, user} =
@@ -17,7 +17,7 @@ defmodule Guardian.AccountsFixtures do
         password: valid_user_password()
       })
       |> Guardian.Accounts.register_user(%{
-        name: unique_company_name()
+        name: unique_organization_name()
       })
 
     user
@@ -27,5 +27,12 @@ defmodule Guardian.AccountsFixtures do
     {:ok, captured} = fun.(&"[TOKEN]#{&1}[TOKEN]")
     [_, token, _] = String.split(captured.body, "[TOKEN]")
     token
+  end
+
+  def create_organization() do
+    organization = %Guardian.Accounts.Organization{name: unique_organization_name()}
+    {:ok, organization} = Guardian.Repo.insert(organization)
+
+    organization
   end
 end

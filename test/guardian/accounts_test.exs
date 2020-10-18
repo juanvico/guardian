@@ -49,7 +49,7 @@ defmodule Guardian.AccountsTest do
 
   describe "register_user/1" do
     test "requires email and password to be set" do
-      {:error, changeset} = Accounts.register_user(%{}, %{name: unique_company_name()})
+      {:error, changeset} = Accounts.register_user(%{}, %{name: unique_organization_name()})
 
       assert %{
                password: ["can't be blank"],
@@ -60,7 +60,7 @@ defmodule Guardian.AccountsTest do
     test "validates email and password when given" do
       {:error, changeset} =
         Accounts.register_user(%{email: "not valid", password: "not valid"}, %{
-          name: unique_company_name()
+          name: unique_organization_name()
         })
 
       assert %{
@@ -74,7 +74,7 @@ defmodule Guardian.AccountsTest do
 
       {:error, changeset} =
         Accounts.register_user(%{email: too_long, password: too_long}, %{
-          name: unique_company_name()
+          name: unique_organization_name()
         })
 
       assert "should be at most 160 character(s)" in errors_on(changeset).email
@@ -85,18 +85,18 @@ defmodule Guardian.AccountsTest do
       %{email: email} = user_fixture()
 
       {:error, changeset} =
-        Accounts.register_user(%{email: email}, %{name: unique_company_name()})
+        Accounts.register_user(%{email: email}, %{name: unique_organization_name()})
 
       assert "has already been taken" in errors_on(changeset).email
 
       # Now try with the upper cased email too, to check that email case is ignored.
       {:error, changeset} =
-        Accounts.register_user(%{email: String.upcase(email)}, %{name: unique_company_name()})
+        Accounts.register_user(%{email: String.upcase(email)}, %{name: unique_organization_name()})
 
       assert "has already been taken" in errors_on(changeset).email
     end
 
-    test "validates company name being supplied" do
+    test "validates organization name being supplied" do
       email = unique_user_email()
 
       {:error, changeset} =
@@ -105,7 +105,7 @@ defmodule Guardian.AccountsTest do
         })
 
       assert %{
-               company: %{name: ["can't be blank"]}
+               organization: %{name: ["can't be blank"]}
              } = errors_on(changeset)
     end
 
@@ -114,7 +114,7 @@ defmodule Guardian.AccountsTest do
 
       {:ok, user} =
         Accounts.register_user(%{email: email, password: valid_user_password(), name: "John"}, %{
-          name: unique_company_name()
+          name: unique_organization_name()
         })
 
       assert user.email == email
@@ -128,7 +128,7 @@ defmodule Guardian.AccountsTest do
 
       {:ok, user} =
         Accounts.register_user(%{email: email, password: valid_user_password(), name: "John"}, %{
-          name: unique_company_name()
+          name: unique_organization_name()
         })
 
       assert :admin = user.role
