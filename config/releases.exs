@@ -22,3 +22,6 @@ config :guardian, Guardian.Repo,
 config :guardian, GuardianWeb.Mailer,
   adapter: Bamboo.SendGridAdapter,
   api_key: System.fetch_env!("SEND_GRID_API_KEY")
+
+# Joken
+config :joken, default_signer: secret_key_base

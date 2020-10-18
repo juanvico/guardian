@@ -13,12 +13,6 @@
       <%= error_tag f, :environment %>
     </div>
   
-    <div class="torch-form-group">
-      <%= label f, :key %>
-      <%= text_input f, :key %>
-      <%= error_tag f, :key %>
-    </div>
-  
     <div class="torch-submit-form">
       <%= submit "Submit", class: "torch-submit-button" %>
     </div>

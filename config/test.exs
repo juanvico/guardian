@@ -25,3 +25,6 @@ config :guardian, GuardianWeb.Endpoint,
 config :logger, level: :warn
 
 config :guardian, GuardianWeb.Mailer, adapter: Bamboo.TestAdapter
+
+# Joken
+config :joken, default_signer: "secret"

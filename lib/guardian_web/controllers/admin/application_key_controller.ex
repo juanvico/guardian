@@ -3,6 +3,7 @@ defmodule GuardianWeb.Admin.ApplicationKeyController do
 
   alias Guardian.Applications
   alias Guardian.Applications.ApplicationKey
+  alias GuardianWeb.Token
 
   
   plug(:put_root_layout, {GuardianWeb.LayoutView, "torch.html"})
@@ -26,7 +27,8 @@ defmodule GuardianWeb.Admin.ApplicationKeyController do
   end
 
   def create(conn, %{"application_key" => application_key_params}, current_user) do
-    case Applications.create_application_key(current_user.organization, application_key_params) do
+    {:ok, api_key, _} = Token.generate_and_sign()
+    case Applications.create_application_key(current_user.organization, Map.put(application_key_params, "key", api_key)) do
       {:ok, application_key} ->
         conn
         |> put_flash(:info, "Application key created successfully.")

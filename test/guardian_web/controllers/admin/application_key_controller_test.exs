@@ -2,9 +2,10 @@ defmodule GuardianWeb.Admin.ApplicationKeyControllerTest do
   use GuardianWeb.ConnCase
 
   alias Guardian.Applications
+  alias GuardianWeb.Token
 
-  @create_attrs %{environment: "some environment", key: "some key"}
-  @update_attrs %{environment: "some updated environment", key: "some updated key"}
+  @create_attrs %{environment: "some environment"}
+  @update_attrs %{environment: "some updated environment"}
   @invalid_attrs %{environment: nil, key: nil}
 
   setup context do
@@ -12,7 +13,8 @@ defmodule GuardianWeb.Admin.ApplicationKeyControllerTest do
   end
 
   def fixture(:application_key, organization) do
-    {:ok, application_key} = Applications.create_application_key(organization, @create_attrs)
+    {:ok, api_key, _} = Token.generate_and_sign()
+    {:ok, application_key} = Applications.create_application_key(organization, Map.put(@create_attrs, :key, api_key))
     application_key
   end
 
@@ -32,7 +34,8 @@ defmodule GuardianWeb.Admin.ApplicationKeyControllerTest do
 
   describe "create application_key" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post conn, Routes.admin_application_key_path(conn, :create), application_key: @create_attrs
+      {:ok, api_key, _} = Token.generate_and_sign()
+      conn = post conn, Routes.admin_application_key_path(conn, :create), application_key: Map.put(@create_attrs, :key, api_key)
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.admin_application_key_path(conn, :show, id)

@@ -39,7 +39,6 @@ defmodule Guardian.MixProject do
       {:ecto_sql, "~> 3.5"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.13.0"},
-      {:floki, ">= 0.0.0", only: :test},
       {:phoenix_html, "~> 2.11"},
       {:phoenix_live_dashboard, "~> 0.2.0"},
       {:telemetry_metrics, "~> 0.4"},
@@ -49,8 +48,10 @@ defmodule Guardian.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:bamboo, "~> 1.6"},
       {:torch, "~> 3.4"},
+      {:joken, "~> 2.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phx_gen_auth, "~> 0.5", only: :dev, runtime: false}
+      {:phx_gen_auth, "~> 0.5", only: :dev, runtime: false},
+      {:floki, ">= 0.0.0", only: :test}
     ]
   end
 

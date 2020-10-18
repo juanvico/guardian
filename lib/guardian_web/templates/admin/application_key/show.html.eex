@@ -19,7 +19,7 @@
       
         <li>
           <div class="torch-show-label">Key:</div>
-          <div class="torch-show-data"><%= @application_key.key %></div>
+          <div class="torch-show-data" style="word-wrap: break-word;"><%= @application_key.key %></div>
         </li>
       
     </ul>
