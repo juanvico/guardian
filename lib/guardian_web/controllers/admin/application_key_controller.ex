@@ -5,15 +5,15 @@ defmodule GuardianWeb.Admin.ApplicationKeyController do
   alias Guardian.Applications.ApplicationKey
   alias GuardianWeb.Token
 
-  
   plug(:put_root_layout, {GuardianWeb.LayoutView, "torch.html"})
-  
 
   def index(conn, params) do
     organization = conn.assigns.current_user.organization
+
     case Applications.paginate_application_keys(organization, params) do
       {:ok, assigns} ->
         render(conn, "index.html", assigns)
+
       error ->
         conn
         |> put_flash(:error, "There was an error rendering Application keys. #{inspect(error)}")
@@ -28,11 +28,16 @@ defmodule GuardianWeb.Admin.ApplicationKeyController do
 
   def create(conn, %{"application_key" => application_key_params}, current_user) do
     {:ok, api_key, _} = Token.generate_and_sign()
-    case Applications.create_application_key(current_user.organization, Map.put(application_key_params, "key", api_key)) do
+
+    case Applications.create_application_key(
+           current_user.organization,
+           Map.put(application_key_params, "key", api_key)
+         ) do
       {:ok, application_key} ->
         conn
         |> put_flash(:info, "Application key created successfully.")
         |> redirect(to: Routes.admin_application_key_path(conn, :show, application_key))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
@@ -57,6 +62,7 @@ defmodule GuardianWeb.Admin.ApplicationKeyController do
         conn
         |> put_flash(:info, "Application key updated successfully.")
         |> redirect(to: Routes.admin_application_key_path(conn, :show, application_key))
+
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", application_key: application_key, changeset: changeset)
     end

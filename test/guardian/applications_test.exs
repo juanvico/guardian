@@ -28,7 +28,8 @@ defmodule Guardian.ApplicationsTest do
         application_key_fixture()
       end
 
-      {:ok, %{application_keys: application_keys} = page} = Applications.paginate_application_keys(organization, %{})
+      {:ok, %{application_keys: application_keys} = page} =
+        Applications.paginate_application_keys(organization, %{})
 
       assert length(application_keys) == 0
       assert page.page_number == 1
@@ -52,19 +53,27 @@ defmodule Guardian.ApplicationsTest do
 
     test "create_application_key/1 with valid data creates a application_key" do
       organization = Guardian.AccountsFixtures.create_organization()
-      assert {:ok, %ApplicationKey{} = application_key} = Applications.create_application_key(organization, @valid_attrs)
+
+      assert {:ok, %ApplicationKey{} = application_key} =
+               Applications.create_application_key(organization, @valid_attrs)
+
       assert application_key.environment == "some environment"
       assert application_key.key == "some key"
     end
 
     test "create_application_key/1 with invalid data returns error changeset" do
       organization = Guardian.AccountsFixtures.create_organization()
-      assert {:error, %Ecto.Changeset{}} = Applications.create_application_key(organization, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Applications.create_application_key(organization, @invalid_attrs)
     end
 
     test "update_application_key/2 with valid data updates the application_key" do
       application_key = application_key_fixture()
-      assert {:ok, application_key} = Applications.update_application_key(application_key, @update_attrs)
+
+      assert {:ok, application_key} =
+               Applications.update_application_key(application_key, @update_attrs)
+
       assert %ApplicationKey{} = application_key
       assert application_key.environment == "some updated environment"
       assert application_key.key == "some updated key"
@@ -72,7 +81,10 @@ defmodule Guardian.ApplicationsTest do
 
     test "update_application_key/2 with invalid data returns error changeset" do
       application_key = application_key_fixture()
-      assert {:error, %Ecto.Changeset{}} = Applications.update_application_key(application_key, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Applications.update_application_key(application_key, @invalid_attrs)
+
       application_key = Applications.get_application_key!(application_key.id)
       refute application_key.environment == "some updated environment"
       refute application_key.key == "some updated key"
@@ -81,7 +93,10 @@ defmodule Guardian.ApplicationsTest do
     test "delete_application_key/1 deletes the application_key" do
       application_key = application_key_fixture()
       assert {:ok, %ApplicationKey{}} = Applications.delete_application_key(application_key)
-      assert_raise Ecto.NoResultsError, fn -> Applications.get_application_key!(application_key.id) end
+
+      assert_raise Ecto.NoResultsError, fn ->
+        Applications.get_application_key!(application_key.id)
+      end
     end
 
     test "change_application_key/1 returns a application_key changeset" do
