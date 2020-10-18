@@ -9,6 +9,7 @@ import Torch.Helpers, only: [sort: 1, paginate: 4]
 import Filtrex.Type.Config
 
 alias Guardian.Applications.ApplicationKey
+alias Guardian.Accounts.Organization
 
 @pagination [page_size: 15]
 @pagination_distance 5
@@ -23,7 +24,7 @@ filters.
     %{application_keys: [%ApplicationKey{}], ...}
 """
 @spec paginate_application_keys(map) :: {:ok, map} | {:error, any}
-def paginate_application_keys(params \\ %{}) do
+def paginate_application_keys(%Organization{} = organization, params \\ %{}) do
   params =
     params
     |> Map.put_new("sort_direction", "desc")
@@ -33,7 +34,7 @@ def paginate_application_keys(params \\ %{}) do
   {:ok, sort_field} = Map.fetch(params, "sort_field")
 
   with {:ok, filter} <- Filtrex.parse_params(filter_config(:application_keys), params["application_key"] || %{}),
-       %Scrivener.Page{} = page <- do_paginate_application_keys(filter, params) do
+       %Scrivener.Page{} = page <- do_paginate_application_keys(organization, filter, params) do
     {:ok,
       %{
         application_keys: page.entries,
@@ -52,8 +53,9 @@ def paginate_application_keys(params \\ %{}) do
   end
 end
 
-defp do_paginate_application_keys(filter, params) do
+defp do_paginate_application_keys(%Organization{id: organization_id}, filter, params) do
   ApplicationKey
+  |> where(organization_id: ^organization_id)
   |> Filtrex.query(filter)
   |> order_by(^sort(params))
   |> paginate(Repo, params, @pagination)

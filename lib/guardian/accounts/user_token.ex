@@ -41,7 +41,7 @@ defmodule Guardian.Accounts.UserToken do
 
     query =
       from users in Guardian.Accounts.User,
-        join: tokens in ^valid_token,
+        join: tokens in ^valid_token, on: users.id == tokens.user_id,
         where: tokens.inserted_at > ago(@session_validity_in_days, "day")
 
     {:ok, query}

@@ -9,7 +9,8 @@ defmodule GuardianWeb.Admin.ApplicationKeyController do
   
 
   def index(conn, params) do
-    case Applications.paginate_application_keys(params) do
+    organization = conn.assigns.current_user.organization
+    case Applications.paginate_application_keys(organization, params) do
       {:ok, assigns} ->
         render(conn, "index.html", assigns)
       error ->

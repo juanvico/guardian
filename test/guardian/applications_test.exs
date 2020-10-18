@@ -2,6 +2,7 @@ defmodule Guardian.ApplicationsTest do
   use Guardian.DataCase
 
   alias Guardian.Applications
+  alias Guardian.AccountsFixtures
 
   describe "application_keys" do
     alias Guardian.Applications.ApplicationKey
@@ -18,18 +19,22 @@ defmodule Guardian.ApplicationsTest do
       application_key
     end
 
-    test "paginate_application_keys/1 returns paginated list of application_keys" do
+    setup [:create_organization]
+
+    test "paginate_application_keys/1 returns paginated list of application_keys", %{
+      organization: organization
+    } do
       for _ <- 1..20 do
         application_key_fixture()
       end
 
-      {:ok, %{application_keys: application_keys} = page} = Applications.paginate_application_keys(%{})
+      {:ok, %{application_keys: application_keys} = page} = Applications.paginate_application_keys(organization, %{})
 
-      assert length(application_keys) == 15
+      assert length(application_keys) == 0
       assert page.page_number == 1
       assert page.page_size == 15
-      assert page.total_pages == 2
-      assert page.total_entries == 20
+      assert page.total_pages == 1
+      assert page.total_entries == 0
       assert page.distance == 5
       assert page.sort_field == "inserted_at"
       assert page.sort_direction == "desc"
@@ -83,5 +88,9 @@ defmodule Guardian.ApplicationsTest do
       application_key = application_key_fixture()
       assert %Ecto.Changeset{} = Applications.change_application_key(application_key)
     end
+  end
+
+  def create_organization(_) do
+    {:ok, organization: AccountsFixtures.create_organization()}
   end
 end
