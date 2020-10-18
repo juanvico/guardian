@@ -77,6 +77,14 @@ resource "aws_ecs_task_definition" "task" {
           "protocol": "tcp"
         }
       ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${var.cloudwatch_group}",
+          "awslogs-region": "${var.aws_region}",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
       "environment": [
         {
           "name": "SECRET_KEY_BASE",

@@ -8,6 +8,7 @@ db_user_arn               = "arn:aws:secretsmanager:us-east-1:198739960305:secre
 db_password_arn           = "arn:aws:secretsmanager:us-east-1:198739960305:secret:prod/guardian/db_password-XaX0q0"
 secret_key_base_arn       = "arn:aws:secretsmanager:us-east-1:198739960305:secret:prod/guardian/secret_key_base-qQCwHs"
 send_grid_api_key_arn     = "arn:aws:secretsmanager:us-east-1:198739960305:secret:prod/guardian/send_grid_api_key-o1XZKy"
+cloudwatch_group          = "production-logs"
 
 # OPTIONAL, default over-rides
 # nothing to over-ride as of yet

@@ -69,6 +69,7 @@ variable "desired_capacity" {
   default     = 1
   description = "Desired number of instances in the cluster"
 }
+
 ### ECS
 variable "ecs_ami" {
   default = "ami-0fac5486e4cff37f4" # us-east-1, ami 2
@@ -83,5 +84,9 @@ variable "key_pair_name" {
   description = "Key pair to use for ssh access, NOTE: it is assumed this key pair exists, it will not be created!"
 }
 
+# Cloudwatch
 
+variable "cloudwatch_group" {
+  description = "Couldwatch log group"
+}
 
