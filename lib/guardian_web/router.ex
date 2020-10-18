@@ -22,6 +22,10 @@ defmodule GuardianWeb.Router do
   end
 
   scope "/", GuardianWeb do
+    get "/health", HealthController, :show
+  end
+
+  scope "/", GuardianWeb do
     pipe_through :browser
 
     live "/", PageLive, :index
