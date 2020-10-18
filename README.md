@@ -18,3 +18,24 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+
+### Deploy
+
+```bash
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 198739960305.dkr.ecr.us-east-1.amazonaws.com
+```
+
+```bash
+docker build -t guardian .
+```
+
+```bash
+docker tag guardian:latest 198739960305.dkr.ecr.us-east-1.amazonaws.com/guardian:latest
+```
+
+```bash
+docker push 198739960305.dkr.ecr.us-east-1.amazonaws.com/guardian:latest
+```
+
+Go to AWS ECS, click on the `guardian-prod` cluster. Update `guardian-prod-service` and click on "Force Deploy".
