@@ -38,6 +38,7 @@ defmodule GuardianWeb.Router do
 
     resources "/errors", ErrorController
     resources "/invitations", InvitationController, except: [:edit, :update]
+    resources "/application_keys", ApplicationKeyController
   end
 
   # Other scopes may use custom stacks.
