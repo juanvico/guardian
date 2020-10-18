@@ -10,6 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :guardian, GuardianWeb.Endpoint,
+  url: [host: "guardian-prod-lb-938513159.us-east-1.elb.amazonaws.com", port: 80],
   server: true,
   cache_static_manifest: "priv/static/cache_manifest.json"
 

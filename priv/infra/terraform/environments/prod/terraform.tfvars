@@ -3,7 +3,7 @@
 
 # REQUIRED, ENVIRONMENT SPECIFIC
 app_env                   = "prod"
-ecr_image_uri             = "198739960305.dkr.ecr.us-east-1.amazonaws.com/guardian:0.2.0"
+ecr_image_uri             = "198739960305.dkr.ecr.us-east-1.amazonaws.com/guardian:latest"
 db_user_arn               = "arn:aws:secretsmanager:us-east-1:198739960305:secret:prod/guardian/db_user-bljaNg"
 db_password_arn           = "arn:aws:secretsmanager:us-east-1:198739960305:secret:prod/guardian/db_password-XaX0q0"
 secret_key_base_arn       = "arn:aws:secretsmanager:us-east-1:198739960305:secret:prod/guardian/secret_key_base-qQCwHs"
