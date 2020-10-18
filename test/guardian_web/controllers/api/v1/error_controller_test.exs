@@ -19,7 +19,7 @@ defmodule GuardianWeb.Api.V1.ErrorControllerTest do
       conn = post(conn, Routes.api_v1_error_path(conn, :create), error: @create_attrs)
 
       assert %{
-               "id" => id,
+               "id" => _id,
                "description" => "some description",
                "severity" => 2,
                "title" => "some title"

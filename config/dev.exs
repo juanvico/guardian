@@ -77,3 +77,6 @@ config :phoenix, :plug_init_mode, :runtime
 
 # Mailer
 config :guardian, GuardianWeb.Mailer, adapter: Bamboo.LocalAdapter
+
+# Joken
+config :joken, default_signer: "secret"

@@ -24,6 +24,7 @@
           <nav class="torch-nav">
             <%= link "Errors" , to: Routes.admin_error_path(@conn, :index) %>
             <%= link "Invitations" , to: Routes.admin_invitation_path(@conn, :index) %>
+            <%= link "Application Keys" , to: Routes.admin_application_key_path(@conn, :index) %>
           </nav>
         </div>
       </section>
