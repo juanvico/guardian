@@ -15,15 +15,6 @@
             <%= filter_string_input(:application_key, :environment, @conn.params) %>
           </div>
         
-          <div class="field">
-            <label>Key</label>
-            <%= filter_select(:application_key, :key, @conn.params) %>
-            <%= filter_string_input(:application_key, :key, @conn.params) %>
-          </div>
-        
-        
-        
-        
         <button type="submit" class="torch-button">Search</button>
         <%= link "Clear Filters", to: Routes.admin_application_key_path(@conn, :index) %>
       <% end %>
