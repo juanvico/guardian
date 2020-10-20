@@ -3,6 +3,9 @@ defmodule Guardian.Errors do
   alias Guardian.Repo
 
   alias Guardian.Errors.Error
+  alias Guardian.Accounts.Organization
+
+  @critical_errors_amount 5
 
   def create_error(organization, attrs \\ %{}) do
     %Error{}
@@ -13,5 +16,15 @@ defmodule Guardian.Errors do
 
   def change_error(%Error{} = error, attrs \\ %{}) do
     Error.changeset(error, attrs)
+  end
+
+  def list_most_critical_errors(%Organization{id: organization_id}) do
+    Error
+    |> where(organization_id: ^organization_id)
+    |> where(resolved: false)
+    |> preload(:assignee)
+    |> order_by(asc: :severity)
+    |> limit(@critical_errors_amount)
+    |> Repo.all()
   end
 end
