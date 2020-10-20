@@ -5,13 +5,16 @@ defmodule GuardianWeb.Api.V1.ErrorController do
   alias Guardian.Errors.Error
   alias GuardianWeb.Mailer
   alias GuardianWeb.ErrorEmail
+  alias Guardian.Accounts
 
   action_fallback GuardianWeb.FallbackController
 
   def create(conn, %{"error" => error_params}, application_key) do
     with {:ok, %Error{} = error} <-
            Errors.create_error(application_key.organization, error_params) do
-      ErrorEmail.new_error_email(error)
+      users = Accounts.organization_users(application_key.organization)
+
+      ErrorEmail.new_error_email(error, users)
       |> Mailer.deliver_now()
 
       conn

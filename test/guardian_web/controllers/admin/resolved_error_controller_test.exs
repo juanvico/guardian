@@ -28,8 +28,6 @@ defmodule GuardianWeb.Admin.ResolvedErrorControllerTest do
     test "redirects to index when data was successfully updated", %{conn: conn, error: error} do
       conn = post(conn, Routes.admin_resolved_error_path(conn, :create, error))
       assert redirected_to(conn) == Routes.admin_error_path(conn, :index)
-
-      assert html_response(conn, 200) =~ "Error successfully marked as resolved."
     end
   end
 

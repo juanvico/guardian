@@ -26,7 +26,8 @@ defmodule GuardianWeb.Api.V1.ErrorControllerTest do
      conn:
        conn
        |> put_req_header("accept", "application/json")
-       |> put_req_header("application-key", application_key.key)}
+       |> put_req_header("application-key", application_key.key),
+     organization: organization}
   end
 
   describe "create error" do
@@ -41,15 +42,24 @@ defmodule GuardianWeb.Api.V1.ErrorControllerTest do
              } = json_response(conn, 201)["data"]
     end
 
-    test "sends an email to all the organization admins", %{conn: conn} do
+    test "sends an email to all the organization admins", %{
+      conn: conn,
+      organization: organization
+    } do
+      users = for _ <- 1..3, do: AccountsFixtures.add_user_to_organization(organization)
+      user_emails = Enum.map(users, & &1.email)
+
       post(conn, Routes.api_v1_error_path(conn, :create), error: @create_attrs)
 
       assert_delivered_email_matches(%{
-        to: [{_, "juanandresvico8@gmail.com"}],
+        to: recipients,
         html_body: html_body,
         subject: "Attention!! New Error!"
       })
 
+      recipient_emails = Enum.map(recipients, fn {_, email} -> email end)
+
+      assert Enum.sort(recipient_emails) == Enum.sort(user_emails)
       assert html_body =~ "some title"
       assert html_body =~ "some description"
     end
