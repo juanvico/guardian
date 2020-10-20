@@ -45,6 +45,7 @@ defmodule GuardianWeb.Router do
     pipe_through [:browser, :ensure_browser_authenticated]
 
     resources "/errors", ErrorController
+    post "/resolved_errors/:id", ResolvedErrorController, :create
     resources "/invitations", InvitationController, except: [:edit, :update]
     resources "/application_keys", ApplicationKeyController
   end

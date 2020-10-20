@@ -10,8 +10,4 @@ defmodule Guardian.Errors do
     |> Ecto.Changeset.put_assoc(:organization, organization)
     |> Repo.insert()
   end
-
-  def change_error(%Error{} = error, attrs \\ %{}) do
-    Error.changeset(error, attrs)
-  end
 end

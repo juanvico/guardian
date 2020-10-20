@@ -32,10 +32,13 @@
           <div class="torch-show-data"><%= show_assignee(@error.assignee) %></div>
         </li>
 
-        <li>
-          <div class="torch-show-label">Resolved:</div>
-          <div class="torch-show-data"><%= @error.resolved %></div>
+        <%= if @error.resolved == true  do %>
+           <li>
+          <div class="torch-show-label">Resolved</div>
         </li>
+        <% else %>
+          <span><%= link "Mark as resolved", to: Routes.admin_resolved_error_path(@conn, :create, @error), method: :post, data: [confirm: "Are sure you want to mark as resolved?"], class: "torch-submit-button" %></span>
+        <% end %>
 
     </ul>
   </div>
