@@ -59,9 +59,12 @@
                 <td><%= error.resolved %></td>
 
               <td class="torch-actions">
+
                 <span><%= link "Show", to: Routes.admin_error_path(@conn, :show, error) %></span>
-                <span><%= link "Edit", to: Routes.admin_error_path(@conn, :edit, error) %></span>
-                <span><%= link "Delete", to: Routes.admin_error_path(@conn, :delete, error), method: :delete, data: [confirm: "Are you sure?"] %></span>
+                <%= if admin?(@current_user) do %>
+                  <span><%= link "Edit", to: Routes.admin_error_path(@conn, :edit, error) %></span>
+                  <span><%= link "Delete", to: Routes.admin_error_path(@conn, :delete, error), method: :delete, data: [confirm: "Are you sure?"] %></span>
+                <% end %>
               </td>
             </tr>
           <% end %>
