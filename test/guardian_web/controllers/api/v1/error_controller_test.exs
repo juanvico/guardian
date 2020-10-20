@@ -2,6 +2,9 @@ defmodule GuardianWeb.Api.V1.ErrorControllerTest do
   use GuardianWeb.ConnCase
   use Bamboo.Test
 
+  alias Guardian.AccountsFixtures
+  alias Guardian.Applications
+
   @create_attrs %{
     description: "some description",
     severity: 2,
@@ -11,7 +14,19 @@ defmodule GuardianWeb.Api.V1.ErrorControllerTest do
   @invalid_attrs %{description: nil, severity: nil, title: nil}
 
   setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
+    organization = AccountsFixtures.create_organization()
+
+    {:ok, application_key} =
+      Applications.create_application_key(organization, %{
+        environment: "some environment",
+        key: "application_key_test"
+      })
+
+    {:ok,
+     conn:
+       conn
+       |> put_req_header("accept", "application/json")
+       |> put_req_header("application-key", application_key.key)}
   end
 
   describe "create error" do

@@ -1,7 +1,8 @@
 defmodule GuardianWeb.Admin.ErrorControllerTest do
   use GuardianWeb.ConnCase
 
-  alias Guardian.ErrorsAdmin
+  alias Guardian.Errors
+  alias Guardian.AccountsFixtures
 
   @create_attrs %{
     description: "some description",
@@ -27,7 +28,8 @@ defmodule GuardianWeb.Admin.ErrorControllerTest do
   end
 
   def fixture(:error) do
-    {:ok, error} = ErrorsAdmin.create_error(@create_attrs)
+    organization = AccountsFixtures.create_organization()
+    {:ok, error} = Errors.create_error(organization, @create_attrs)
     error
   end
 
@@ -35,18 +37,6 @@ defmodule GuardianWeb.Admin.ErrorControllerTest do
     test "lists all errors", %{conn: conn} do
       conn = get(conn, Routes.admin_error_path(conn, :index))
       assert html_response(conn, 200) =~ "Errors"
-    end
-  end
-
-  describe "create error" do
-    test "redirects to show when data is valid", %{conn: conn} do
-      conn = post conn, Routes.admin_error_path(conn, :create), error: @create_attrs
-
-      assert %{id: id} = redirected_params(conn)
-      assert redirected_to(conn) == Routes.admin_error_path(conn, :show, id)
-
-      conn = get(conn, Routes.admin_error_path(conn, :show, id))
-      assert html_response(conn, 200) =~ "Error Details"
     end
   end
 

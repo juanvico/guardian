@@ -1,8 +1,4 @@
 defmodule Guardian.Applications do
-  @moduledoc """
-  The Applications context.
-  """
-
   import Ecto.Query, warn: false
   alias Guardian.Repo
   import Torch.Helpers, only: [sort: 1, paginate: 4]
@@ -14,15 +10,6 @@ defmodule Guardian.Applications do
   @pagination [page_size: 15]
   @pagination_distance 5
 
-  @doc """
-  Paginate the list of application_keys using filtrex
-  filters.
-
-  ## Examples
-
-      iex> list_application_keys(%{})
-      %{application_keys: [%ApplicationKey{}], ...}
-  """
   @spec paginate_application_keys(map) :: {:ok, map} | {:error, any}
   def paginate_application_keys(%Organization{} = organization, params \\ %{}) do
     params =
@@ -64,47 +51,8 @@ defmodule Guardian.Applications do
     |> paginate(Repo, params, @pagination)
   end
 
-  @doc """
-  Returns the list of application_keys.
-
-  ## Examples
-
-      iex> list_application_keys()
-      [%ApplicationKey{}, ...]
-
-  """
-  def list_application_keys do
-    Repo.all(ApplicationKey)
-  end
-
-  @doc """
-  Gets a single application_key.
-
-  Raises `Ecto.NoResultsError` if the Application key does not exist.
-
-  ## Examples
-
-      iex> get_application_key!(123)
-      %ApplicationKey{}
-
-      iex> get_application_key!(456)
-      ** (Ecto.NoResultsError)
-
-  """
   def get_application_key!(id), do: Repo.get!(ApplicationKey, id)
 
-  @doc """
-  Creates a application_key.
-
-  ## Examples
-
-      iex> create_application_key(%{field: value})
-      {:ok, %ApplicationKey{}}
-
-      iex> create_application_key(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def create_application_key(organization, attrs \\ %{}) do
     %ApplicationKey{}
     |> ApplicationKey.changeset(attrs)
@@ -112,51 +60,25 @@ defmodule Guardian.Applications do
     |> Repo.insert()
   end
 
-  @doc """
-  Updates a application_key.
-
-  ## Examples
-
-      iex> update_application_key(application_key, %{field: new_value})
-      {:ok, %ApplicationKey{}}
-
-      iex> update_application_key(application_key, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
   def update_application_key(%ApplicationKey{} = application_key, attrs) do
     application_key
     |> ApplicationKey.changeset(attrs)
     |> Repo.update()
   end
 
-  @doc """
-  Deletes a ApplicationKey.
-
-  ## Examples
-
-      iex> delete_application_key(application_key)
-      {:ok, %ApplicationKey{}}
-
-      iex> delete_application_key(application_key)
-      {:error, %Ecto.Changeset{}}
-
-  """
   def delete_application_key(%ApplicationKey{} = application_key) do
     Repo.delete(application_key)
   end
 
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking application_key changes.
-
-  ## Examples
-
-      iex> change_application_key(application_key)
-      %Ecto.Changeset{source: %ApplicationKey{}}
-
-  """
   def change_application_key(%ApplicationKey{} = application_key, attrs \\ %{}) do
     ApplicationKey.changeset(application_key, attrs)
+  end
+
+  def application_key_by_key(key) do
+    ApplicationKey
+    |> where(key: ^key)
+    |> preload(:organization)
+    |> Repo.one()
   end
 
   defp filter_config(:application_keys) do

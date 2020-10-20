@@ -17,5 +17,6 @@ defmodule Guardian.Applications.ApplicationKey do
     application_key
     |> cast(attrs, [:environment, :key])
     |> validate_required([:environment, :key])
+    |> assoc_constraint(:organization)
   end
 end

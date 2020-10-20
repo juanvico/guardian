@@ -41,11 +41,6 @@ defmodule Guardian.ApplicationsTest do
       assert page.sort_direction == "desc"
     end
 
-    test "list_application_keys/0 returns all application_keys" do
-      %ApplicationKey{id: id} = application_key_fixture()
-      assert [%ApplicationKey{id: ^id}] = Applications.list_application_keys()
-    end
-
     test "get_application_key!/1 returns the application_key with given id" do
       %ApplicationKey{id: id} = application_key_fixture()
       assert %ApplicationKey{id: ^id} = Applications.get_application_key!(id)

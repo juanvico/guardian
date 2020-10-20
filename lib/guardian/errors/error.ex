@@ -2,10 +2,11 @@ defmodule Guardian.Errors.Error do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Guardian.Accounts.User
+  alias Guardian.Accounts.{Organization, User}
 
   schema "errors" do
     belongs_to :assignee, User
+    belongs_to :organization, Organization
     field :description, :string
     field :severity, :integer, default: 1
     field :title, :string
@@ -28,5 +29,6 @@ defmodule Guardian.Errors.Error do
     |> validate_inclusion(:severity, 1..4)
     |> validate_required([:title])
     |> assoc_constraint(:assignee)
+    |> assoc_constraint(:organization)
   end
 end

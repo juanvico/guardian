@@ -1,7 +1,9 @@
 defmodule Guardian.ErrorsAdminTest do
   use Guardian.DataCase
 
+  alias Guardian.AccountsFixtures
   alias Guardian.ErrorsAdmin
+  alias Guardian.Errors
 
   describe "errors" do
     alias Guardian.Errors.Error
@@ -26,26 +28,29 @@ defmodule Guardian.ErrorsAdminTest do
     }
 
     def error_fixture(attrs \\ %{}) do
-      {:ok, error} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> ErrorsAdmin.create_error()
+      organization = AccountsFixtures.create_organization()
+      attrs = Enum.into(attrs, @valid_attrs)
+      {:ok, error} = Errors.create_error(organization, attrs)
 
       error
     end
 
-    test "paginate_errors/1 returns paginated list of errors" do
+    setup [:create_organization]
+
+    test "paginate_errors/1 returns paginated list of errors", %{
+      organization: organization
+    } do
       for _ <- 1..20 do
         error_fixture()
       end
 
-      {:ok, %{errors: errors} = page} = ErrorsAdmin.paginate_errors(%{})
+      {:ok, %{errors: errors} = page} = ErrorsAdmin.paginate_errors(organization, %{})
 
-      assert length(errors) == 15
+      assert length(errors) == 0
       assert page.page_number == 1
       assert page.page_size == 15
-      assert page.total_pages == 2
-      assert page.total_entries == 20
+      assert page.total_pages == 1
+      assert page.total_entries == 0
       assert page.distance == 5
       assert page.sort_field == "inserted_at"
       assert page.sort_direction == "desc"
@@ -59,18 +64,6 @@ defmodule Guardian.ErrorsAdminTest do
     test "get_error!/1 returns the error with given id" do
       %Error{id: id} = error = error_fixture()
       assert %Error{id: ^id} = ErrorsAdmin.get_error!(error.id)
-    end
-
-    test "create_error/1 with valid data creates a error" do
-      assert {:ok, %Error{} = error} = ErrorsAdmin.create_error(@valid_attrs)
-      assert error.description == "some description"
-      assert error.resolved == false
-      assert error.severity == 2
-      assert error.title == "some title"
-    end
-
-    test "create_error/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = ErrorsAdmin.create_error(@invalid_attrs)
     end
 
     test "update_error/2 with valid data updates the error" do
@@ -100,5 +93,9 @@ defmodule Guardian.ErrorsAdminTest do
       error = error_fixture()
       assert %Ecto.Changeset{} = ErrorsAdmin.change_error(error)
     end
+  end
+
+  def create_organization(_) do
+    {:ok, organization: AccountsFixtures.create_organization()}
   end
 end

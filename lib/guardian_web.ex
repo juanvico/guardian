@@ -29,7 +29,11 @@ defmodule GuardianWeb do
       def action(conn, _) do
         args =
           if function_exported?(__MODULE__, action_name(conn), 3) do
-            [conn, conn.params, conn.assigns.current_user]
+            [
+              conn,
+              conn.params,
+              conn.assigns[:current_user] || conn.assigns[:application_key]
+            ]
           else
             [conn, conn.params]
           end

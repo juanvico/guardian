@@ -8,8 +8,9 @@ defmodule GuardianWeb.Api.V1.ErrorController do
 
   action_fallback GuardianWeb.FallbackController
 
-  def create(conn, %{"error" => error_params}) do
-    with {:ok, %Error{} = error} <- Errors.create_error(error_params) do
+  def create(conn, %{"error" => error_params}, application_key) do
+    with {:ok, %Error{} = error} <-
+           Errors.create_error(application_key.organization, error_params) do
       ErrorEmail.new_error_email(error)
       |> Mailer.deliver_now()
 

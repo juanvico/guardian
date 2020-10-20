@@ -4,9 +4,10 @@ defmodule Guardian.Errors do
 
   alias Guardian.Errors.Error
 
-  def create_error(attrs \\ %{}) do
+  def create_error(organization, attrs \\ %{}) do
     %Error{}
     |> Error.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:organization, organization)
     |> Repo.insert()
   end
 

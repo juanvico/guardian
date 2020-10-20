@@ -11,7 +11,7 @@ defmodule GuardianWeb.Admin.ErrorController do
     params =
       Map.merge(
         %{
-          "error" => %{"resolved_equals" => "true"},
+          "error" => %{"resolved_equals" => "false"},
           "sort_direction" => "asc",
           "sort_field" => "severity"
         },
@@ -19,8 +19,9 @@ defmodule GuardianWeb.Admin.ErrorController do
       )
 
     conn = %{conn | params: params}
+    organization = conn.assigns.current_user.organization
 
-    case ErrorsAdmin.paginate_errors(params) do
+    case ErrorsAdmin.paginate_errors(organization, params) do
       {:ok, assigns} ->
         render(conn, "index.html", assigns)
 
@@ -35,20 +36,6 @@ defmodule GuardianWeb.Admin.ErrorController do
     users = Accounts.organization_users(conn.assigns.current_user.organization)
     changeset = ErrorsAdmin.change_error(%Error{})
     render(conn, "new.html", changeset: changeset, organization_users: users)
-  end
-
-  def create(conn, %{"error" => error_params}) do
-    users = Accounts.organization_users(conn.assigns.current_user.organization)
-
-    case ErrorsAdmin.create_error(error_params) do
-      {:ok, error} ->
-        conn
-        |> put_flash(:info, "Error created successfully.")
-        |> redirect(to: Routes.admin_error_path(conn, :show, error))
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset, organization_users: users)
-    end
   end
 
   def show(conn, %{"id" => id}) do

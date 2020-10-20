@@ -17,6 +17,10 @@ defmodule GuardianWeb.Router do
     plug GuardianWeb.Plugs.EnsureAuthenticated
   end
 
+  pipeline :ensure_api_application_authenticated do
+    plug GuardianWeb.Plugs.EnsureApiApplicationAuthenticated
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -32,7 +36,7 @@ defmodule GuardianWeb.Router do
   end
 
   scope "/api/v1", GuardianWeb.Api.V1, as: :api_v1 do
-    pipe_through :api
+    pipe_through [:api, :ensure_api_application_authenticated]
 
     resources "/errors", ErrorController, only: [:create]
   end
