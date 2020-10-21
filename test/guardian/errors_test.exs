@@ -36,6 +36,7 @@ defmodule Guardian.ErrorsTest do
       for i <- 1..20 do
         Errors.create_error(organization, %{@valid_attrs | severity: rem(i, 3) + 2})
       end
+
       {:ok, error} = Errors.create_error(organization2, %{@valid_attrs | severity: 1})
       Errors.change_error(error, %{resolved: false})
 
