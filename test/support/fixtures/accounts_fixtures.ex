@@ -4,6 +4,8 @@ defmodule Guardian.AccountsFixtures do
   entities via the `Guardian.Accounts` context.
   """
 
+  alias Guardian.Accounts.User
+
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
   def valid_user_password, do: "hello world!"
   def unique_organization_name, do: "organization #{System.unique_integer()}"
@@ -11,11 +13,7 @@ defmodule Guardian.AccountsFixtures do
   def user_fixture(attrs \\ %{}) do
     {:ok, user} =
       attrs
-      |> Enum.into(%{
-        email: unique_user_email(),
-        name: "John",
-        password: valid_user_password()
-      })
+      |> Enum.into(user_attrs())
       |> Guardian.Accounts.register_user(%{
         name: unique_organization_name()
       })
@@ -34,5 +32,23 @@ defmodule Guardian.AccountsFixtures do
     {:ok, organization} = Guardian.Repo.insert(organization)
 
     organization
+  end
+
+  def add_user_to_organization(organization) do
+    {:ok, user} =
+      %User{}
+      |> User.registration_changeset(user_attrs())
+      |> Ecto.Changeset.put_assoc(:organization, organization)
+      |> Guardian.Repo.insert()
+
+    user
+  end
+
+  defp user_attrs() do
+    %{
+      email: unique_user_email(),
+      name: "John",
+      password: valid_user_password()
+    }
   end
 end

@@ -93,6 +93,11 @@ defmodule Guardian.ErrorsAdminTest do
       error = error_fixture()
       assert %Ecto.Changeset{} = ErrorsAdmin.change_error(error)
     end
+
+    test "resolve_error/1 resolves the error" do
+      error = error_fixture()
+      assert {:ok, %Error{resolved: true}} = ErrorsAdmin.resolve_error(error)
+    end
   end
 
   def create_organization(_) do

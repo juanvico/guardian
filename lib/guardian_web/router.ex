@@ -21,6 +21,10 @@ defmodule GuardianWeb.Router do
     plug GuardianWeb.Plugs.EnsureApiApplicationAuthenticated
   end
 
+  pipeline :ensure_admin_user do
+    plug GuardianWeb.Plugs.EnsureAdminUser
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -44,8 +48,15 @@ defmodule GuardianWeb.Router do
   scope "/admin", GuardianWeb.Admin, as: :admin do
     pipe_through [:browser, :ensure_browser_authenticated]
 
-    resources "/errors", ErrorController
+    resources "/errors", ErrorController, only: [:index, :show]
+    post "/resolved_errors/:id", ResolvedErrorController, :create
     resources "/invitations", InvitationController, except: [:edit, :update]
+  end
+
+  scope "/admin", GuardianWeb.Admin, as: :admin do
+    pipe_through [:browser, :ensure_browser_authenticated, :ensure_admin_user]
+
+    resources "/errors", ErrorController, except: [:index, :show]
     resources "/application_keys", ApplicationKeyController
   end
 

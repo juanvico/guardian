@@ -74,6 +74,12 @@ defmodule Guardian.ErrorsAdmin do
     Error.changeset(error, attrs)
   end
 
+  def resolve_error(%Error{} = error) do
+    error
+    |> Ecto.Changeset.change(resolved: true)
+    |> Repo.update()
+  end
+
   defp filter_config(:errors) do
     defconfig do
       text(:title)
