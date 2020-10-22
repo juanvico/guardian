@@ -4,6 +4,7 @@ defmodule GuardianWeb.Api.V1.ErrorControllerTest do
 
   alias Guardian.AccountsFixtures
   alias Guardian.Applications
+  alias Guardian.Errors
 
   @create_attrs %{
     description: "some description",
@@ -67,6 +68,24 @@ defmodule GuardianWeb.Api.V1.ErrorControllerTest do
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.api_v1_error_path(conn, :create), error: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
+    end
+  end
+
+  describe "list 5 most critical errors" do
+    test "renders list of errors", %{
+      conn: conn,
+      organization: organization
+    } do
+      for _ <- 1..10, do: {:ok, _} = Errors.create_error(organization, @create_attrs)
+      conn = get(conn, Routes.api_v1_error_path(conn, :index))
+
+      assert length(json_response(conn, 200)["data"]) == 5
+    end
+
+    test "renders empty list", %{conn: conn} do
+      conn = get(conn, Routes.api_v1_error_path(conn, :index))
+
+      assert length(json_response(conn, 200)["data"]) == 0
     end
   end
 end

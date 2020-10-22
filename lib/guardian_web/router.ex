@@ -42,7 +42,7 @@ defmodule GuardianWeb.Router do
   scope "/api/v1", GuardianWeb.Api.V1, as: :api_v1 do
     pipe_through [:api, :ensure_api_application_authenticated]
 
-    resources "/errors", ErrorController, only: [:create]
+    resources "/errors", ErrorController, only: [:create, :index]
   end
 
   scope "/admin", GuardianWeb.Admin, as: :admin do
