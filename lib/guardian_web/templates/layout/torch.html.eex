@@ -26,6 +26,7 @@
             <%= link "Invitations" , to: Routes.admin_invitation_path(@conn, :index) %>
             <%= if admin?(@current_user) do %>
               <%= link "Application Keys" , to: Routes.admin_application_key_path(@conn, :index) %>
+              <%= link "Statistics" , to: Routes.admin_statistics_path(@conn, :index) %>
             <% end %>
           </nav>
         </div>

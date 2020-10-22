@@ -50,6 +50,7 @@ defmodule GuardianWeb.Router do
 
     resources "/errors", ErrorController, only: [:index, :show]
     post "/resolved_errors/:id", ResolvedErrorController, :create
+    get "/statistics", StatisticsController, :index
     resources "/invitations", InvitationController, except: [:edit, :update]
   end
 
