@@ -1,0 +1,40 @@
+<section id="torch-toolbar">
+</section>
+<section id="torch-index-content">
+  <div class="torch-container">
+    <section id="torch-filters">
+      <h3>Dates</h3>
+      <%= form_tag @conn.request_path, method: :get, id: "torch-filters-form" do %>
+
+         <div class="field">
+            <label>Start date</label>
+            <%= filter_date_input(:error, :occurence, @conn.params) %>
+          </div>
+
+        <div>
+          <%= submit "Search" %>
+        </div>
+      <% end %>
+
+    </section>
+
+   <section id="torch-table">
+      <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+        <label style="font-size: 30px; text-align: center;">Total errors</label>
+        <p style="font-size: 80px; text-align: center; color: #a94442;"><%= @errors %></p>
+      </div>
+
+      <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+        <label style="font-size: 30px; text-align: center;">Resolved errors</label>
+        <p style="font-size: 80px; text-align: center; color: #a94442;"><%= @resolved %></p>
+      </div>
+
+      <%= for i <- 1..4 do %>
+        <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+          <label style="font-size: 30px; text-align: center;">Severity <%= i %></label>
+          <p style="font-size: 80px; text-align: center; color: #a94442;"><%= Enum.find(@by_severity, fn %{severity: severity} -> severity == i end)[:total_errors] || 0 %></p>
+        </div>
+      <% end %>
+    </section>
+  </div>
+</section>
