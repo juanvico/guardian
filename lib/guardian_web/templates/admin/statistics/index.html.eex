@@ -32,7 +32,7 @@
       <%= for i <- 1..4 do %>
         <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
           <label style="font-size: 30px; text-align: center;">Severity <%= i %></label>
-          <p style="font-size: 80px; text-align: center; color: #a94442;"><%= Enum.find(@by_severity, fn %{severity: severity} -> severity == i end)[:total_errors] || 0 %></p>
+          <p style="font-size: 80px; text-align: center; color: #a94442;"><%= total_errors_for_severity(@by_severity, i) %></p>
         </div>
       <% end %>
     </section>
