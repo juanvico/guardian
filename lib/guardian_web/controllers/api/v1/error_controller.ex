@@ -21,7 +21,7 @@ defmodule GuardianWeb.Api.V1.ErrorController do
       users = Accounts.organization_users(application_key.organization)
 
       ErrorEmail.new_error_email(error, users)
-      |> Mailer.deliver_now()
+      |> Mailer.deliver_later()
 
       conn
       |> put_status(:created)
