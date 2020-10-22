@@ -19,8 +19,9 @@ defmodule Guardian.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
+      # applications: [:cachex],
       mod: {Guardian.Application, []},
-      extra_applications: [:logger, :runtime_tools, :os_mon]
+      extra_applications: [:logger, :runtime_tools, :os_mon, :cachex]
     ]
   end
 
@@ -49,6 +50,7 @@ defmodule Guardian.MixProject do
       {:bamboo, "~> 1.6"},
       {:torch, "~> 3.4"},
       {:joken, "~> 2.0"},
+      {:cachex, "~> 3.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phx_gen_auth, "~> 0.5", only: :dev, runtime: false},
       {:floki, ">= 0.0.0", only: :test}

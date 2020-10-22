@@ -7,6 +7,7 @@ defmodule Guardian.Application do
 
   def start(_type, _args) do
     children = [
+      {Cachex, name: :errors},
       # Start the Ecto repository
       Guardian.Repo,
       # Start the Telemetry supervisor

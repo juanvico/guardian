@@ -10,7 +10,21 @@ defmodule GuardianWeb.Api.V1.ErrorController do
   action_fallback GuardianWeb.FallbackController
 
   def index(conn, _, application_key) do
-    errors = Errors.list_most_critical_errors(application_key.organization)
+    cached_errors =
+      Cachex.fetch(
+        :errors,
+        "most-critical-errors-#{application_key.organization.id}",
+        fn _ ->
+          {:ok, Errors.list_most_critical_errors(application_key.organization)}
+        end,
+        ttl: :timer.minutes(10)
+      )
+
+    errors =
+      case cached_errors do
+        {:ok, errors} -> errors
+        {:commit, {:ok, errors}} -> errors
+      end
 
     render(conn, "index.json", errors: errors)
   end
