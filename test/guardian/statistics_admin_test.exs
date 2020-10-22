@@ -14,9 +14,11 @@ defmodule Guardian.StatisticsAdminTest do
 
   def fixture(_) do
     organization = AccountsFixtures.create_organization()
+
     for i <- 1..20 do
       Errors.create_error(organization, %{@valid_error_attrs | severity: rem(i, 4) + 1})
     end
+
     {:ok, organization: organization}
   end
 
@@ -37,7 +39,9 @@ defmodule Guardian.StatisticsAdminTest do
     start_date = Date.add(Date.utc_today(), -1)
     end_date = Date.add(Date.utc_today(), 1)
 
-    %{resolved: resolved} = StatisticsAdmin.get_statistics_report(organization, start_date, end_date)
+    %{resolved: resolved} =
+      StatisticsAdmin.get_statistics_report(organization, start_date, end_date)
+
     assert resolved == 1
   end
 
@@ -45,7 +49,8 @@ defmodule Guardian.StatisticsAdminTest do
     start_date = Date.add(Date.utc_today(), -1)
     end_date = Date.add(Date.utc_today(), 1)
 
-    %{by_severity: by_severity} = StatisticsAdmin.get_statistics_report(organization, start_date, end_date)
+    %{by_severity: by_severity} =
+      StatisticsAdmin.get_statistics_report(organization, start_date, end_date)
 
     assert length(by_severity) == 4
     assert Enum.find(by_severity, fn %{severity: severity} -> severity == 1 end).total_errors == 5

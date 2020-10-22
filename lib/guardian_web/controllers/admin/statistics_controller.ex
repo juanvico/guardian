@@ -5,10 +5,17 @@ defmodule GuardianWeb.Admin.StatisticsController do
 
   plug(:put_root_layout, {GuardianWeb.LayoutView, "torch.html"})
 
-  def index(conn, %{"error" => %{"occurence_between" => %{"start" => start_date, "end" => end_date}}}, current_user) do
+  def index(
+        conn,
+        %{"error" => %{"occurence_between" => %{"start" => start_date, "end" => end_date}}},
+        current_user
+      ) do
     start_date = transform_date(start_date)
     end_date = transform_date(end_date)
-    statistics = StatisticsAdmin.get_statistics_report(current_user.organization, start_date, end_date)
+
+    statistics =
+      StatisticsAdmin.get_statistics_report(current_user.organization, start_date, end_date)
+
     render(conn, "index.html", statistics)
   end
 
