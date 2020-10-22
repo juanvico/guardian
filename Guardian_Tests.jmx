@@ -44,7 +44,7 @@
           <collectionProp name="HeaderManager.headers">
             <elementProp name="" elementType="Header">
               <stringProp name="Header.name">application-key</stringProp>
-              <stringProp name="Header.value"> eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJKb2tlbiIsImV4cCI6MTYwMzM1ODU5OCwiaWF0IjoxNjAzMzUxMzk4LCJpc3MiOiJKb2tlbiIsImp0aSI6IjJwMDN2NmdjMmlkM2hsbWo5bzAwMDByaCIsIm5iZiI6MTYwMzM1MTM5OH0.K6oe7g-K63qtos053NndmW0CeYgMtOZmQSu0MJXzp0w</stringProp>
+              <stringProp name="Header.value">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJKb2tlbiIsImV4cCI6MTYwMzQwMzEwMiwiaWF0IjoxNjAzMzk1OTAyLCJpc3MiOiJKb2tlbiIsImp0aSI6IjJwMDZnNHZrZHR0ZmphOWQwYzAwMTBpMSIsIm5iZiI6MTYwMzM5NTkwMn0.jpjLyUjGHSqJSP5qy2gg7CY98msa2iIScHVZ8gEy6_c</stringProp>
             </elementProp>
           </collectionProp>
         </HeaderManager>
