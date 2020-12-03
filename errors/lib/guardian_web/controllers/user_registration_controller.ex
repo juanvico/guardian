@@ -15,6 +15,8 @@ defmodule GuardianWeb.UserRegistrationController do
 
     case Accounts.register_user(user_params, organization_params || %{}) do
       {:ok, user} ->
+        reportNewUserToOrg(user.organization)
+
         {:ok, _} =
           Accounts.deliver_user_confirmation_instructions(
             user,
@@ -28,5 +30,11 @@ defmodule GuardianWeb.UserRegistrationController do
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  defp reportNewUserToOrg(organization) do
+    HTTPoison.post("http://localhost:3000/user/#{organization.id}", "", [
+      {"Content-Type", "application/json"}
+    ])
   end
 end
