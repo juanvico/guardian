@@ -1,8 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const errorController = require('../controllers/error-controller');
+const router = express.Router();
 
-router.post('/', (req, res) => {
-  res.send('error added');
-});
+router.post('/:org_id', errorController.onErrorAdded);
 
 module.exports = router;
