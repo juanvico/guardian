@@ -2,9 +2,9 @@ const ErrorService = require('../services/error-service');
 
 const onErrorAdded = async (req, res) => {
   const { org_id: orgId } = req.params;
-  const error = await ErrorService.updateOrganizationErrors(orgId);
+  await ErrorService.updateOrganizationErrors(orgId);
 
-  res.send({ error });
+  res.send({ message: 'Error added successfully' });
 };
 
 module.exports = {

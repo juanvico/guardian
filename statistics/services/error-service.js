@@ -1,6 +1,6 @@
 const OrganizationError = require('../models/organization-error');
 
-const updateOrganizationErrors = async (orgId) => {
+const updateOrganizationErrors = async orgId => {
   const now = new Date();
   const year = now.getFullYear();
   const month = now.getMonth();
