@@ -6,7 +6,8 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 require('dotenv/config');
 
-const indexRouter = require('./routes/index');
+const router = require('./routes');
+const { startJobs } = require('./jobs');
 
 const app = express();
 
@@ -22,13 +23,15 @@ mongoose.connect(process.env.DB_URI, {
   useCreateIndex: true,
 });
 
-app.use('/', indexRouter);
+startJobs();
 
-app.use(function(req, res, next) {
+app.use('/', router);
+
+app.use(function(_req, _res, next) {
   next(createError(404));
 });
 
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
