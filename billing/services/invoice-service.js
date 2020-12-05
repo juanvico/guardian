@@ -3,6 +3,17 @@ const OrganizationError = require('../models/organization-error');
 const Invoice = require('../models/invoice');
 const { PRICE_PER_USER_IN_USD, PRICE_PER_ERROR_IN_USD } = require('../utils/constants');
 
+const getInvoice = async (orgId, month, year) => {
+  const {
+    price,
+    error_count: errorCount,
+    user_count: userCount,
+    price_per_user: pricePerUser,
+    price_per_error: pricePerError,
+  } = await Invoice.findOne({ organization_id: orgId, month, year });
+  return { month, year, orgId, price, errorCount, userCount, pricePerUser, pricePerError };
+};
+
 const createInvoice = async orgId => {
   const now = new Date();
   const year = now.getFullYear();
@@ -38,4 +49,5 @@ const createInvoices = async () => {
 
 module.exports = {
   createInvoices,
+  getInvoice,
 };
