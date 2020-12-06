@@ -1,0 +1,7 @@
+const PRICE_PER_ERROR_IN_USD = 0.01;
+const PRICE_PER_USER_IN_USD = 5;
+
+module.exports = {
+  PRICE_PER_ERROR_IN_USD,
+  PRICE_PER_USER_IN_USD,
+};
