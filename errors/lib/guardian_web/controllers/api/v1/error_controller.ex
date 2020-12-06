@@ -27,6 +27,7 @@ defmodule GuardianWeb.Api.V1.ErrorController do
     with {:ok, %Error{} = error} <-
            Errors.create_error(application_key.organization, error_params) do
       users = Accounts.organization_users(application_key.organization)
+      reportError(error, application_key.organization)
 
       ErrorEmail.new_error_email(error, users)
       |> Mailer.deliver_later()
@@ -35,5 +36,11 @@ defmodule GuardianWeb.Api.V1.ErrorController do
       |> put_status(:created)
       |> render("show.json", error: error)
     end
+  end
+
+  defp reportError(error, organization) do
+    HTTPoison.post("http://localhost:3000/errors/#{organization.id}", "", [
+      {"Content-Type", "application/json"}
+    ])
   end
 end

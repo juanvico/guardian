@@ -1,6 +1,6 @@
 {application,filtrex,
-             [{applications,[kernel,stdlib,elixir,logger,tzdata,ecto,ecto_sql,
-                             timex]},
+             [{applications,[kernel,stdlib,elixir,logger,tzdata,timex,ecto,
+                             ecto_sql]},
               {description,"A library for performing and validating complex filters from a client (e.g. smart filters)\n"},
               {modules,['Elixir.Filtrex','Elixir.Filtrex.AST',
                         'Elixir.Filtrex.Condition',

@@ -1,6 +1,6 @@
 {application,torch,
-             [{applications,[kernel,stdlib,elixir,logger,phoenix,phoenix_html,
-                             gettext,scrivener_ecto,filtrex,timex]},
+             [{applications,[kernel,stdlib,elixir,logger,gettext,timex,
+                             filtrex,scrivener_ecto,phoenix_html,phoenix]},
               {description,"Rapid admin generator for Phoenix"},
               {modules,['Elixir.Mix.Tasks.Torch.Gen.Html',
                         'Elixir.Mix.Tasks.Torch.Install',

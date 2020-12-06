@@ -37,6 +37,7 @@ defmodule GuardianWeb.AcceptedInvitationController do
         case Accounts.join_through_invitation(organization, Map.put(user_params, "role", role)) do
           {:ok, user} ->
             Invitations.claim_invitation(invitation)
+            reportNewUserToOrg(organization)
 
             conn
             |> delete_session(:invitation_token)
@@ -58,5 +59,11 @@ defmodule GuardianWeb.AcceptedInvitationController do
     conn
     |> put_flash(:error, "You cannot accept the invitation since you already have an account.")
     |> redirect(to: "/")
+  end
+
+  defp reportNewUserToOrg(organization) do
+    HTTPoison.post("http://localhost:3000/user/#{organization.id}", "", [
+      {"Content-Type", "application/json"}
+    ])
   end
 end
