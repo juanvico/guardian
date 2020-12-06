@@ -35,7 +35,15 @@ const onErrorUpdated = async (req, res) => {
   res.send({ message: 'Error updated successfully' });
 };
 
+const onErrorResolved = async (req, res) => {
+  const { error_id: errorId } = req.params;
+  await ErrorService.updateError({ error_id: errorId }, { resolved: true });
+
+  res.send({ message: 'Error resolved successfully' });
+};
+
 module.exports = {
   onErrorAdded,
   onErrorUpdated,
+  onErrorResolved,
 };
