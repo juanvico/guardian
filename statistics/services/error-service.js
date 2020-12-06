@@ -5,6 +5,11 @@ const addError = error => {
   return ErrorModel.create({ ...error, date });
 };
 
+const updateError = (errorId, error) => {
+  return ErrorModel.updateOne(errorId, error);
+};
+
 module.exports = {
   addError,
+  updateError,
 };
