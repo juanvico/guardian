@@ -1,0 +1,8 @@
+<%= if @current_user do %>
+  <span><%= @current_user.email %></span>
+  <span><%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %></span>
+  <span><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %></span>
+<% else %>
+  <span><%= link "Register", to: Routes.user_registration_path(@conn, :new) %></span>
+  <span><%= link "Log in", to: Routes.user_session_path(@conn, :new) %></span>
+<% end %>

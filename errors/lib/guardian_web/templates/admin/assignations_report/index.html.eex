@@ -1,0 +1,28 @@
+<section id="torch-toolbar">
+</section>
+<section id="torch-index-content">
+  <div class="torch-container">
+
+    <section id="torch-table">
+       <div style="font-size: 30px; padding-bottom: 20px;">Non asigned errors</div>
+       <%= for error <- @assignation_report.errors do %>
+        <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+          <p style="font-size: 20px; text-align: center; color: #a94442;"><%= error.title %></p>
+          <p style="font-size: 20px; text-align: center; color: #a94442;">Severity: <%= error.severity %></p>
+          <p style="font-size: 20px; text-align: center; color: #a94442;">Description: <%= error.description %></p>
+        </div>
+      <% end %>
+    </section>
+
+    <section id="torch-table">
+       <div style="font-size: 30px; padding-bottom: 20px;">Top 10 developers</div>
+       <%= for user <- @assignation_report.users do %>
+        <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+          <p style="font-size: 20px; text-align: center; color: #a94442;"><%= user.name %></p>
+          <p style="font-size: 20px; text-align: center; color: #a94442;"><%= user.email %></p>
+        </div>
+      <% end %>
+    </section>
+
+  </div>
+</section>

@@ -1,0 +1,44 @@
+<%= form_for @changeset, @action, [multipart: true, id: "torch-form"], fn f -> %>
+  <fieldset class="torch-panel">
+    <legend>
+      <span>Details</span>
+    </legend>
+    <%= if @changeset.action do %>
+      <p class="torch-form-error">Oops, something went wrong! Please check the errors below.</p>
+    <% end %>
+
+    <div class="torch-form-group">
+      <%= label f, :title %>
+      <%= text_input f, :title %>
+      <%= error_tag f, :title %>
+    </div>
+
+    <div class="torch-form-group">
+      <%= label f, :description %>
+      <%= text_input f, :description %>
+      <%= error_tag f, :description %>
+    </div>
+
+    <div class="torch-form-group">
+      <%= label f, :severity %>
+      <%= number_input f, :severity %>
+      <%= error_tag f, :severity %>
+    </div>
+
+    <div class="torch-form-group">
+      <%= label f, :assignee %>
+      <%= select f, :assignee_id, [{"Select an assignee", nil} | Enum.map(@organization_users, &({show_assignee(&1), &1.id}))] %>
+      <%= error_tag f, :assignee %>
+    </div>
+
+    <div class="torch-form-group">
+      <%= label f, :resolved %>
+      <%= checkbox f, :resolved %>
+      <%= error_tag f, :resolved %>
+    </div>
+
+    <div class="torch-submit-form">
+      <%= submit "Submit", class: "torch-submit-button" %>
+    </div>
+  </fieldset>
+<% end %>
