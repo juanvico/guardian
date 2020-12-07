@@ -1,9 +1,0 @@
-<h2>
-  <%= @sender.name || "Someone" %> has invited you to join their organization!
-</h2>
-
-<p>
-  Click on the link below to join!
-
-  <%= link "Join organization", to: Routes.accepted_invitation_url(GuardianWeb.Endpoint, :new, @invitation.token) %>
-</p>
