@@ -24,11 +24,13 @@ const onErrorUpdated = async (req, res) => {
   const { error_id: errorId } = req.params;
   const {
     severity,
+    resolved,
     assigned_developer: assignedDeveloper,
   } = req.body;
 
   await ErrorService.updateError({ error_id: errorId }, {
     severity,
+    resolved,
     assigned_developer: assignedDeveloper,
   });
 

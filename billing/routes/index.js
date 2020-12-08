@@ -6,7 +6,7 @@ const invoicesRouter = require('./invoices');
 const router = express.Router();
 
 router.get('/', (_req, res) => {
-  res.send('Statistics API');
+  res.send('Billing API');
 });
 
 router.use('/errors', errorsRouter);

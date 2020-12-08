@@ -21,9 +21,6 @@ const getErrorsBetweenDatesStatistics = async (req, res) => {
   const startDate = new Date(start);
   const endDate = new Date(end);
 
-  console.log(startDate);
-  console.log(endDate);
-
   const [errors, resolved, bySeverity] = await Promise.all([
     StatisticsService.getErrorsBetweenDates(orgId, startDate, endDate),
     StatisticsService.getResolvedErrorsBetweenDates(orgId, startDate, endDate),
