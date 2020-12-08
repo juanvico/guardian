@@ -7,6 +7,7 @@ const getTop10DevelopersWithMostResolved = orgId => {
       date: { $gte: subMonths(new Date(), 1) },
       organization_id: orgId,
       resolved: true,
+      assigned_developer: { $exists: true },
     } },
     { $group: {
       _id: '$assigned_developer',
@@ -19,7 +20,7 @@ const getTop10DevelopersWithMostResolved = orgId => {
 const getOldUnassignedErrors = async orgId => {
   const errors = await ErrorModel.find({
     assigned_developer: null,
-    date: { $gte: subDays(new Date(), 2) },
+    date: { $lte: subDays(new Date(), 2) },
     organization_id: orgId,
     resolved: false,
   });
@@ -39,11 +40,6 @@ const getResolvedErrorsBetweenDates = (orgId, start, end) => {
 };
 
 const getErrorsBetweenDatesBySeverity = async (orgId, start, end) => {
-  console.log(await ErrorModel.aggregate([
-    { $match: {
-      date: { $gt: start, $lt: end },
-      organization_id: orgId,
-    } }]));
   return ErrorModel.aggregate([
     { $match: {
       date: { $gt: start, $lt: end },
