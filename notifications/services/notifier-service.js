@@ -41,7 +41,7 @@ const notifyErrorAmount = async () => {
 
 const notifyErrorAmountPerUser = async (user, date) => {
   const errorAmount = await ErrorModel
-    .find({ date: { $gte: subDays(date, 1) } })
+    .find({ date: { $gte: subDays(date, 1) }, severity: { $lte: user.configuration.severity_filter } })
     .countDocuments();
   
   if (!errorAmount) return;
@@ -62,7 +62,39 @@ sendErrorAmountEmail = async (user, errorAmount) => {
   });
 };
 
+const notifyUnresolvedAmount = async () => {
+  const users = await User.find();
+  const now = new Date();
+
+  await Promise.all(users.map(user => notifyUnresolvedAmountPerUser(user, now)));
+};
+
+const notifyUnresolvedAmountPerUser = async (user, date) => {
+  const errorAmount = await ErrorModel
+    .find({ date: { $lte: subDays(date, 2) }, assigned_developer: user.user_id, resolved: false })
+    .countDocuments();
+  console.log(errorAmount);
+  
+  if (!errorAmount) return;
+  await sendUnresolvedAmountEmail(user, errorAmount);
+};
+
+sendUnresolvedAmountEmail = async (user, errorAmount) => {
+  emailSender.sendEmail({
+    to: user.email,
+    subject: `Guardian - ${errorAmount} unresolved errors`,
+    message: `
+      <div style='background-color: #00173d; color: #fff; border-radius: 20px; margin: 15px; padding: 25px;'>
+        <strong style='font-size: 25px; margin-top: 15px; margin-bottom: 15px;'>
+          You have ${errorAmount} unresolved errors assigned!
+        </strong>
+      </div>
+    `,
+  });
+};
+
 module.exports = {
   onErrorAssigned,
   notifyErrorAmount,
+  notifyUnresolvedAmount,
 };
