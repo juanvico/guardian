@@ -56,7 +56,6 @@ defmodule GuardianWeb.Admin.ErrorController do
 
     case ErrorsAdmin.update_error(error, error_params) do
       {:ok, error} ->
-        IO.inspect(error)
         reportError(error)
         conn
         |> put_flash(:info, "Error updated successfully.")

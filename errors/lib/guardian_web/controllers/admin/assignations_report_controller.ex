@@ -11,8 +11,6 @@ defmodule GuardianWeb.Admin.AssignationsReportController do
         current_user
       ) do
     %{errors: errors, users: users} = AssignationsReportAdmin.assignations_report(current_user.organization)
-    IO.inspect(errors)
-    IO.inspect(users)
     render(conn, "index.html", %{assignation_report: %{errors: errors, users: users}})
   end
 end

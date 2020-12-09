@@ -50,8 +50,6 @@ defmodule GuardianWeb.Router do
 
     resources "/errors", ErrorController, only: [:index, :show]
     post "/resolved_errors/:id", ResolvedErrorController, :create
-    get "/statistics", StatisticsController, :index
-    get "/invoices", InvoicesController, :index
     resources "/invitations", InvitationController, except: [:edit, :update]
     resources "/assignations", AssignationsReportController, except: [:edit, :update]
   end
@@ -60,6 +58,9 @@ defmodule GuardianWeb.Router do
     pipe_through [:browser, :ensure_browser_authenticated, :ensure_admin_user]
 
     resources "/errors", ErrorController, except: [:index, :show]
+    get "/statistics", StatisticsController, :index
+    get "/invoices", InvoicesController, :index
+    resources "/notifications_config", NotificationConfigController, only: [:index, :create]
     resources "/application_keys", ApplicationKeyController
   end
 
