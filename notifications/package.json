@@ -6,6 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.4.0",
     "cookie-parser": "~1.4.4",
     "cron": "^1.8.2",
     "date-fns": "^2.16.1",
