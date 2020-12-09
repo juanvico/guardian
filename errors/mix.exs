@@ -21,7 +21,7 @@ defmodule Guardian.MixProject do
     [
       # applications: [:cachex],
       mod: {Guardian.Application, []},
-      extra_applications: [:logger, :runtime_tools, :os_mon, :cachex, :httpoison]
+      extra_applications: [:logger, :runtime_tools, :os_mon, :cachex, :httpoison, :amqp]
     ]
   end
 
@@ -54,7 +54,8 @@ defmodule Guardian.MixProject do
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phx_gen_auth, "~> 0.5", only: :dev, runtime: false},
       {:floki, ">= 0.0.0", only: :test},
-      {:httpoison, "~> 1.7"}
+      {:httpoison, "~> 1.7"},
+      {:amqp, "~> 1.6.0"}
     ]
   end
 

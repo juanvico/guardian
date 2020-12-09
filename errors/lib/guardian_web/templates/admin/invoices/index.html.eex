@@ -1,0 +1,33 @@
+<section id="torch-toolbar">
+</section>
+<section id="torch-index-content">
+  <div class="torch-container">
+    <section id="torch-filters">
+      <h3>Dates</h3>
+
+      <%= form_tag @conn.request_path, method: :get, id: "torch-filters-form" do %>
+         <div class="field">
+            <label>Date</label>
+              <%= filter_date_input(:params, :date, @conn.params, :select) %>
+          </div>
+
+        <div>
+          <%= submit "Search" %>
+        </div>
+      <% end %>
+
+
+    </section>
+
+    <section id="torch-table">
+      Error Count: <%= @invoice["errorCount"] %></p>
+      Error month: <%= @invoice["month"] %></p>
+      Error orgId: <%= @invoice["orgId"] %></p>
+      Error price: <%= @invoice["price"] %></p>
+      Error pricePerError: <%= @invoice["pricePerError"] %></p>
+      Error pricePerUser: <%= @invoice["pricePerUser"] %></p>
+      Error userCount: <%= @invoice["userCount"] %></p>
+      Error year: <%= @invoice["year"] %></p>
+    </section>
+  </div>
+</section>

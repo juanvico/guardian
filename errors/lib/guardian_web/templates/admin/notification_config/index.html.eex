@@ -1,0 +1,26 @@
+<section id="torch-toolbar">
+</section>
+<section id="torch-index-content">
+  <div class="torch-container">
+
+    <section id="torch-table">
+
+     <%= form_for @conn, Routes.admin_notification_config_path(@conn, :create), [id: "torch-filters-form", as: :config], fn f -> %>
+
+        <div class="torch-form-group">
+          <%= label f, :severity %>
+          <%= number_input f, :severity %>
+        </div>
+
+        <div class="torch-form-group">
+          <%= time_input f, :time %>
+        </div>
+
+        <div class="torch-submit-form">
+          <%= submit "Submit", class: "torch-submit-button" %>
+        </div>
+      </fieldset>
+    <% end %>
+    </section>
+  </div>
+</section>

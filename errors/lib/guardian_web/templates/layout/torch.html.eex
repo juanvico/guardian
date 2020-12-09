@@ -27,7 +27,10 @@
             <%= if admin?(@current_user) do %>
               <%= link "Application Keys" , to: Routes.admin_application_key_path(@conn, :index) %>
               <%= link "Statistics" , to: Routes.admin_statistics_path(@conn, :index) %>
+              <%= link "Invoices" , to: Routes.admin_invoices_path(@conn, :index) %>
+              <%= link "Assignations Info" , to: Routes.admin_assignations_report_path(@conn, :index) %>
             <% end %>
+            <%= link "Notifications Config" , to: Routes.admin_notification_config_path(@conn, :index) %>
           </nav>
         </div>
       </section>

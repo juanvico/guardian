@@ -56,6 +56,7 @@ defmodule GuardianWeb.Admin.ErrorController do
 
     case ErrorsAdmin.update_error(error, error_params) do
       {:ok, error} ->
+        reportError(error)
         conn
         |> put_flash(:info, "Error updated successfully.")
         |> redirect(to: Routes.admin_error_path(conn, :show, error))
@@ -73,4 +74,16 @@ defmodule GuardianWeb.Admin.ErrorController do
     |> put_flash(:info, "Error deleted successfully.")
     |> redirect(to: Routes.admin_error_path(conn, :index))
   end
+
+  defp reportError(error) do
+    HTTPoison.patch("http://localhost:3001/errors/#{error.id}", Jason.encode!(%{
+      "severity" => error.severity,
+      "resolved" => error.resolved,
+      "assigned_developer" => error.assignee_id,
+      "org_id" => error.organization_id
+    }), [
+      {"Content-Type", "application/json"}
+    ])
+  end
+
 end

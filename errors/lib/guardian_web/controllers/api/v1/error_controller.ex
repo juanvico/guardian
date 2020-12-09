@@ -42,5 +42,13 @@ defmodule GuardianWeb.Api.V1.ErrorController do
     HTTPoison.post("http://localhost:3000/errors/#{organization.id}", "", [
       {"Content-Type", "application/json"}
     ])
+    HTTPoison.post("http://localhost:3001/errors/#{error.id}", Jason.encode!(%{
+      "severity" => error.severity,
+      "resolved" => error.resolved,
+      "org_id" => organization.id
+    }), [
+      {"Content-Type", "application/json"}
+    ])
   end
+
 end

@@ -1,0 +1,216 @@
+2020-12-09 16:06:21 =ERROR REPORT====
+** Generic server <0.1577.0> terminating 
+** Last message in was {timeout,#Ref<0.3446211652.4132438017.49727>,idle_timeout}
+** When Server state == {state,#Port<0.1788>,#Ref<0.3446211652.4132438017.49727>,<0.1573.0>,<0.1575.0>,{method,rabbit_framing_amqp_0_9_1},{expecting_header,<<>>}}
+** Reason for termination ==
+** {socket_error,timeout}
+2020-12-09 16:06:21 =CRASH REPORT====
+  crasher:
+    initial call: amqp_main_reader:init/1
+    pid: <0.1577.0>
+    registered_name: []
+    exception exit: {{socket_error,timeout},[{gen_server,handle_common_reply,8,[{file,"gen_server.erl"},{line,751}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+    ancestors: [<0.1572.0>,<0.1571.0>,amqp_sup,<0.1107.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.1572.0>,#Port<0.1788>]
+    dictionary: [{process_name,{amqp_main_reader,<<"client 127.0.0.1:55496 -> 127.0.0.1:5672">>}},{gen_server_call_timeout,60000}]
+    trap_exit: false
+    status: running
+    heap_size: 1598
+    stack_size: 27
+    reductions: 15304
+  neighbours:
+2020-12-09 16:06:21 =ERROR REPORT====
+** Generic server <0.1573.0> terminating 
+** Last message in was {socket_error,timeout}
+** When Server state == {state,amqp_network_connection,{state,#Port<0.1788>,<<"client 127.0.0.1:55496 -> 127.0.0.1:5672">>,10,<0.1576.0>,131072,<0.1572.0>,undefined,false},<0.1575.0>,{amqp_params_network,<<"user">>,{plaintext,<<"password">>},<<"/">>,"localhost",5672,0,0,10,50000,none,[fun amqp_auth_mechanisms:plain/3,fun amqp_auth_mechanisms:amqplain/3],[{<<"connection_name">>,longstr,<<"rabbitmq">>}],[]},2047,[{<<"capabilities">>,table,[{<<"publisher_confirms">>,bool,true},{<<"exchange_exchange_bindings">>,bool,true},{<<"basic.nack">>,bool,true},{<<"consumer_cancel_notify">>,bool,true},{<<"connection.blocked">>,bool,true},{<<"consumer_priorities">>,bool,true},{<<"authentication_failure_close">>,bool,true},{<<"per_consumer_qos">>,bool,true},{<<"direct_reply_to">>,bool,true}]},{<<"cluster_name">>,longstr,<<"rabbit@2d18b672a360">>},{<<"copyright">>,longstr,<<"Copyright (c) 2007-2020 VMware, Inc. or its affiliates.">>},{<<"information">>,longstr,<<"Licensed under the MPL 2.0. Website: https://rabbitmq.com">>},{<<"platform">>,longstr,<<"Erlang/OTP 23.1.5">>},{<<"product">>,longstr,<<"RabbitMQ">>},{<<"version">>,longstr,<<"3.8.9">>}],none,false}
+** Reason for termination ==
+** {socket_error,timeout}
+2020-12-09 16:06:21 =SUPERVISOR REPORT====
+     Supervisor: {<0.1572.0>,amqp_connection_type_sup}
+     Context:    child_terminated
+     Reason:     {socket_error,timeout}
+     Offender:   [{pid,<0.1577.0>},{name,main_reader},{mfargs,{amqp_main_reader,start_link,[#Port<0.1788>,<0.1573.0>,<0.1575.0>,{method,rabbit_framing_amqp_0_9_1},<<"client 127.0.0.1:55496 -> 127.0.0.1:5672">>]}},{restart_type,transient},{shutdown,30000},{child_type,worker}]
+
+2020-12-09 16:06:21 =SUPERVISOR REPORT====
+     Supervisor: {<0.1572.0>,amqp_connection_type_sup}
+     Context:    shutdown
+     Reason:     reached_max_restart_intensity
+     Offender:   [{pid,<0.1577.0>},{name,main_reader},{mfargs,{amqp_main_reader,start_link,[#Port<0.1788>,<0.1573.0>,<0.1575.0>,{method,rabbit_framing_amqp_0_9_1},<<"client 127.0.0.1:55496 -> 127.0.0.1:5672">>]}},{restart_type,transient},{shutdown,30000},{child_type,worker}]
+
+2020-12-09 16:06:21 =CRASH REPORT====
+  crasher:
+    initial call: amqp_gen_connection:init/1
+    pid: <0.1573.0>
+    registered_name: []
+    exception exit: {{socket_error,timeout},[{gen_server,handle_common_reply,8,[{file,"gen_server.erl"},{line,751}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+    ancestors: [<0.1571.0>,amqp_sup,<0.1107.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.1571.0>]
+    dictionary: [{process_name,{amqp_gen_connection,<<"client 127.0.0.1:55496 -> 127.0.0.1:5672">>}}]
+    trap_exit: true
+    status: running
+    heap_size: 4185
+    stack_size: 27
+    reductions: 14717
+  neighbours:
+2020-12-09 16:06:21 =SUPERVISOR REPORT====
+     Supervisor: {<0.1571.0>,amqp_connection_sup}
+     Context:    child_terminated
+     Reason:     {socket_error,timeout}
+     Offender:   [{pid,<0.1573.0>},{name,connection},{mfargs,{amqp_gen_connection,start_link,[<0.1572.0>,{amqp_params_network,<<"user">>,{plaintext,<<"password">>},<<"/">>,"localhost",5672,0,0,10,50000,none,[fun amqp_auth_mechanisms:plain/3,fun amqp_auth_mechanisms:amqplain/3],[{<<"connection_name">>,longstr,<<"rabbitmq">>}],[]}]}},{restart_type,intrinsic},{shutdown,brutal_kill},{child_type,worker}]
+
+2020-12-09 16:06:21 =SUPERVISOR REPORT====
+     Supervisor: {<0.1571.0>,amqp_connection_sup}
+     Context:    shutdown
+     Reason:     reached_max_restart_intensity
+     Offender:   [{pid,<0.1573.0>},{name,connection},{mfargs,{amqp_gen_connection,start_link,[<0.1572.0>,{amqp_params_network,<<"user">>,{plaintext,<<"password">>},<<"/">>,"localhost",5672,0,0,10,50000,none,[fun amqp_auth_mechanisms:plain/3,fun amqp_auth_mechanisms:amqplain/3],[{<<"connection_name">>,longstr,<<"rabbitmq">>}],[]}]}},{restart_type,intrinsic},{shutdown,brutal_kill},{child_type,worker}]
+
+2020-12-09 16:56:08 =ERROR REPORT====
+Failed to start Ranch listener 'Elixir.GuardianWeb.Endpoint.HTTP' in ranch_tcp:listen([{cacerts,'...'},{key,'...'},{cert,'...'},{port,4000}]) for reason eaddrinuse (address already in use)
+2020-12-09 16:56:08 =CRASH REPORT====
+  crasher:
+    initial call: supervisor:ranch_acceptors_sup/1
+    pid: <0.556.0>
+    registered_name: []
+    exception exit: {{listen_error,'Elixir.GuardianWeb.Endpoint.HTTP',eaddrinuse},[{ranch_acceptors_sup,listen_error,5,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/ranch/src/ranch_acceptors_sup.erl"},{line,66}]},{supervisor,init,1,[{file,"supervisor.erl"},{line,295}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,374}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,342}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+    ancestors: [<0.554.0>,'Elixir.GuardianWeb.Endpoint','Elixir.Guardian.Supervisor',<0.505.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.554.0>]
+    dictionary: [{logger,error_logger}]
+    trap_exit: true
+    status: running
+    heap_size: 1598
+    stack_size: 27
+    reductions: 4567
+  neighbours:
+2020-12-09 16:56:08 =SUPERVISOR REPORT====
+     Supervisor: {<0.554.0>,ranch_listener_sup}
+     Context:    start_error
+     Reason:     {listen_error,'Elixir.GuardianWeb.Endpoint.HTTP',eaddrinuse}
+     Offender:   [{pid,undefined},{id,ranch_acceptors_sup},{mfargs,{ranch_acceptors_sup,start_link,['Elixir.GuardianWeb.Endpoint.HTTP',ranch_tcp]}},{restart_type,permanent},{shutdown,infinity},{child_type,supervisor}]
+
+2020-12-09 16:56:08 =SUPERVISOR REPORT====
+     Supervisor: {local,'Elixir.GuardianWeb.Endpoint'}
+     Context:    start_error
+     Reason:     {shutdown,{failed_to_start_child,ranch_acceptors_sup,{listen_error,'Elixir.GuardianWeb.Endpoint.HTTP',eaddrinuse}}}
+     Offender:   [{pid,undefined},{id,{ranch_listener_sup,'Elixir.GuardianWeb.Endpoint.HTTP'}},{mfargs,{'Elixir.Phoenix.Endpoint.Cowboy2Adapter',start_link,[http,'Elixir.GuardianWeb.Endpoint',{ranch_listener_sup,start_link,['Elixir.GuardianWeb.Endpoint.HTTP',ranch_tcp,#{max_connections => 16384,num_acceptors => 100,socket_opts => [{port,4000}]},cowboy_clear,#{env => #{dispatch => [{'_',[],[{'_',[],'Elixir.Phoenix.Endpoint.Cowboy2Handler',{'Elixir.GuardianWeb.Endpoint',[]}}]}]},stream_handlers => [cowboy_telemetry_h,cowboy_stream_h]}]}]}},{restart_type,permanent},{shutdown,infinity},{child_type,supervisor}]
+
+2020-12-09 16:56:08 =SUPERVISOR REPORT====
+     Supervisor: {local,'Elixir.Guardian.Supervisor'}
+     Context:    start_error
+     Reason:     {shutdown,{failed_to_start_child,{ranch_listener_sup,'Elixir.GuardianWeb.Endpoint.HTTP'},{shutdown,{failed_to_start_child,ranch_acceptors_sup,{listen_error,'Elixir.GuardianWeb.Endpoint.HTTP',eaddrinuse}}}}}
+     Offender:   [{pid,undefined},{id,'Elixir.GuardianWeb.Endpoint'},{mfargs,{'Elixir.GuardianWeb.Endpoint',start_link,[[]]}},{restart_type,permanent},{shutdown,infinity},{child_type,supervisor}]
+
+2020-12-09 16:56:08 =CRASH REPORT====
+  crasher:
+    initial call: application_master:init/4
+    pid: <0.504.0>
+    registered_name: []
+    exception exit: {{{shutdown,{failed_to_start_child,'Elixir.GuardianWeb.Endpoint',{shutdown,{failed_to_start_child,{ranch_listener_sup,'Elixir.GuardianWeb.Endpoint.HTTP'},{shutdown,{failed_to_start_child,ranch_acceptors_sup,{listen_error,'Elixir.GuardianWeb.Endpoint.HTTP',eaddrinuse}}}}}}},{'Elixir.Guardian.Application',start,[normal,[]]}},[{application_master,init,4,[{file,"application_master.erl"},{line,138}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+    ancestors: [<0.503.0>]
+    message_queue_len: 1
+    messages: [{'EXIT',<0.505.0>,normal}]
+    links: [<0.503.0>,<0.43.0>]
+    dictionary: []
+    trap_exit: true
+    status: running
+    heap_size: 610
+    stack_size: 27
+    reductions: 205
+  neighbours:
+2020-12-09 16:57:16 =ERROR REPORT====
+Failed to start Ranch listener 'Elixir.GuardianWeb.Endpoint.HTTP' in ranch_tcp:listen([{cacerts,'...'},{key,'...'},{cert,'...'},{port,4000}]) for reason eaddrinuse (address already in use)
+2020-12-09 16:57:16 =CRASH REPORT====
+  crasher:
+    initial call: supervisor:ranch_acceptors_sup/1
+    pid: <0.556.0>
+    registered_name: []
+    exception exit: {{listen_error,'Elixir.GuardianWeb.Endpoint.HTTP',eaddrinuse},[{ranch_acceptors_sup,listen_error,5,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/ranch/src/ranch_acceptors_sup.erl"},{line,66}]},{supervisor,init,1,[{file,"supervisor.erl"},{line,295}]},{gen_server,init_it,2,[{file,"gen_server.erl"},{line,374}]},{gen_server,init_it,6,[{file,"gen_server.erl"},{line,342}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+    ancestors: [<0.554.0>,'Elixir.GuardianWeb.Endpoint','Elixir.Guardian.Supervisor',<0.505.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.554.0>]
+    dictionary: [{logger,error_logger}]
+    trap_exit: true
+    status: running
+    heap_size: 1598
+    stack_size: 27
+    reductions: 4565
+  neighbours:
+2020-12-09 16:57:16 =SUPERVISOR REPORT====
+     Supervisor: {<0.554.0>,ranch_listener_sup}
+     Context:    start_error
+     Reason:     {listen_error,'Elixir.GuardianWeb.Endpoint.HTTP',eaddrinuse}
+     Offender:   [{pid,undefined},{id,ranch_acceptors_sup},{mfargs,{ranch_acceptors_sup,start_link,['Elixir.GuardianWeb.Endpoint.HTTP',ranch_tcp]}},{restart_type,permanent},{shutdown,infinity},{child_type,supervisor}]
+
+2020-12-09 16:57:16 =SUPERVISOR REPORT====
+     Supervisor: {local,'Elixir.GuardianWeb.Endpoint'}
+     Context:    start_error
+     Reason:     {shutdown,{failed_to_start_child,ranch_acceptors_sup,{listen_error,'Elixir.GuardianWeb.Endpoint.HTTP',eaddrinuse}}}
+     Offender:   [{pid,undefined},{id,{ranch_listener_sup,'Elixir.GuardianWeb.Endpoint.HTTP'}},{mfargs,{'Elixir.Phoenix.Endpoint.Cowboy2Adapter',start_link,[http,'Elixir.GuardianWeb.Endpoint',{ranch_listener_sup,start_link,['Elixir.GuardianWeb.Endpoint.HTTP',ranch_tcp,#{max_connections => 16384,num_acceptors => 100,socket_opts => [{port,4000}]},cowboy_clear,#{env => #{dispatch => [{'_',[],[{'_',[],'Elixir.Phoenix.Endpoint.Cowboy2Handler',{'Elixir.GuardianWeb.Endpoint',[]}}]}]},stream_handlers => [cowboy_telemetry_h,cowboy_stream_h]}]}]}},{restart_type,permanent},{shutdown,infinity},{child_type,supervisor}]
+
+2020-12-09 16:57:16 =SUPERVISOR REPORT====
+     Supervisor: {local,'Elixir.Guardian.Supervisor'}
+     Context:    start_error
+     Reason:     {shutdown,{failed_to_start_child,{ranch_listener_sup,'Elixir.GuardianWeb.Endpoint.HTTP'},{shutdown,{failed_to_start_child,ranch_acceptors_sup,{listen_error,'Elixir.GuardianWeb.Endpoint.HTTP',eaddrinuse}}}}}
+     Offender:   [{pid,undefined},{id,'Elixir.GuardianWeb.Endpoint'},{mfargs,{'Elixir.GuardianWeb.Endpoint',start_link,[[]]}},{restart_type,permanent},{shutdown,infinity},{child_type,supervisor}]
+
+2020-12-09 16:57:16 =CRASH REPORT====
+  crasher:
+    initial call: application_master:init/4
+    pid: <0.504.0>
+    registered_name: []
+    exception exit: {{{shutdown,{failed_to_start_child,'Elixir.GuardianWeb.Endpoint',{shutdown,{failed_to_start_child,{ranch_listener_sup,'Elixir.GuardianWeb.Endpoint.HTTP'},{shutdown,{failed_to_start_child,ranch_acceptors_sup,{listen_error,'Elixir.GuardianWeb.Endpoint.HTTP',eaddrinuse}}}}}}},{'Elixir.Guardian.Application',start,[normal,[]]}},[{application_master,init,4,[{file,"application_master.erl"},{line,138}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]}
+    ancestors: [<0.503.0>]
+    message_queue_len: 1
+    messages: [{'EXIT',<0.505.0>,normal}]
+    links: [<0.503.0>,<0.43.0>]
+    dictionary: []
+    trap_exit: true
+    status: running
+    heap_size: 610
+    stack_size: 27
+    reductions: 204
+  neighbours:
+2020-12-09 18:00:18 =CRASH REPORT====
+  crasher:
+    initial call: cowboy_stream_h:request_process/3
+    pid: <0.1201.0>
+    registered_name: []
+    exception exit: {{{#{'__exception__' => true,'__struct__' => 'Elixir.MatchError',term => {error,#{'__exception__' => true,'__struct__' => 'Elixir.HTTPoison.Error',id => nil,reason => econnrefused}}},[{'Elixir.Guardian.AssignationsReportAdmin',assignations_report,1,[{file,"lib/guardian/assignations_report_admin.ex"},{line,9}]},{'Elixir.GuardianWeb.Admin.AssignationsReportController',index,3,[{file,"lib/guardian_web/controllers/admin/assignations_report_controller.ex"},{line,13}]},{'Elixir.GuardianWeb.Admin.AssignationsReportController',action,2,[{file,"lib/guardian_web/controllers/admin/assignations_report_controller.ex"},{line,1}]},{'Elixir.GuardianWeb.Admin.AssignationsReportController',phoenix_controller_pipeline,2,[{file,"lib/guardian_web/controllers/admin/assignations_report_controller.ex"},{line,1}]},{'Elixir.Phoenix.Router','__call__',2,[{file,"lib/phoenix/router.ex"},{line,352}]},{'Elixir.GuardianWeb.Endpoint',plug_builder_call,2,[{file,"lib/guardian_web/endpoint.ex"},{line,1}]},{'Elixir.GuardianWeb.Endpoint','call (overridable 3)',2,[{file,"lib/plug/debugger.ex"},{line,132}]},{'Elixir.GuardianWeb.Endpoint',call,2,[{file,"lib/guardian_web/endpoint.ex"},{line,1}]},{'Elixir.Phoenix.Endpoint.Cowboy2Handler',init,4,[{file,"lib/phoenix/endpoint/cowboy2_handler.ex"},{line,65}]},{cowboy_handler,execute,2,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_handler.erl"},{line,37}]},{cowboy_stream_h,execute,3,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_stream_h.erl"},{line,300}]},{cowboy_stream_h,request_process,3,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_stream_h.erl"},{line,291}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]},{'Elixir.GuardianWeb.Endpoint',call,[#{'__struct__' => 'Elixir.Plug.Conn',adapter => {'Elixir.Plug.Cowboy.Conn',#{bindings => #{},body_length => 0,cert => undefined,has_body => false,headers => #{<<"accept">> => <<"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9">>,<<"accept-encoding">> => <<"gzip, deflate, br">>,<<"accept-language">> => <<"es-419,es;q=0.9,en;q=0.8">>,<<"connection">> => <<"keep-alive">>,<<"cookie">> => <<"_guardian_key=SFMyNTY.g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYcjdYQXl5dUJHcjJXX0V5UkdONXBpdW5UbQAAAA5saXZlX3NvY2tldF9pZG0AAAA7dXNlcnNfc2Vzc2lvbnM6bVpGM2NDN0I3a1ZyU3RkY3FTQ3ZoMjBSTk10VHp6Y0xNVE5XN2ZaWHZPaz1tAAAACnVzZXJfdG9rZW5tAAAAIJmRd3Auwe5Fa0rXXKkgr4dtETTLU883CzEzVu32V7zp.I0lvq48IKfU7SDl4EZeXUU0uuf53btd2b_i7seZiZok; m=2258:dXNlcjpwYXNzd29yZA%253D%253D">>,<<"host">> => <<"localhost:4001">>,<<"referer">> => <<"http://localhost:4001/admin/notifications_config">>,<<"sec-fetch-dest">> => <<"document">>,<<"sec-fetch-mode">> => <<"navigate">>,<<"sec-fetch-site">> => <<"same-origin">>,<<"sec-fetch-user">> => <<"?1">>,<<"upgrade-insecure-requests">> => <<"1">>,<<"user-agent">> => <<"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36">>},host => <<"localhost">>,host_info => undefined,method => <<"GET">>,path => <<"/admin/assignations">>,path_info => undefined,peer => {{127,0,0,1},51474},pid => <0.1199.0>,port => 4001,qs => <<>>,ref => 'Elixir.GuardianWeb.Endpoint.HTTP',scheme => <<"http">>,sock => {{127,0,0,1},4001},streamid => 1,version => 'HTTP/1.1'}},assigns => #{},before_send => [],body_params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => body_params},cookies => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => cookies},halted => false,host => <<"localhost">>,method => <<"GET">>,owner => <0.1201.0>,params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => params},path_info => [<<"admin">>,<<"assignations">>],path_params => #{},port => 4001,private => #{},query_params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => query_params},query_string => <<>>,remote_ip => {127,0,0,1},req_cookies => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => cookies},req_headers => [{<<"accept">>,<<"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9">>},{<<"accept-encoding">>,<<"gzip, deflate, br">>},{<<"accept-language">>,<<"es-419,es;q=0.9,en;q=0.8">>},{<<"connection">>,<<"keep-alive">>},{<<"cookie">>,<<"_guardian_key=SFMyNTY.g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYcjdYQXl5dUJHcjJXX0V5UkdONXBpdW5UbQAAAA5saXZlX3NvY2tldF9pZG0AAAA7dXNlcnNfc2Vzc2lvbnM6bVpGM2NDN0I3a1ZyU3RkY3FTQ3ZoMjBSTk10VHp6Y0xNVE5XN2ZaWHZPaz1tAAAACnVzZXJfdG9rZW5tAAAAIJmRd3Auwe5Fa0rXXKkgr4dtETTLU883CzEzVu32V7zp.I0lvq48IKfU7SDl4EZeXUU0uuf53btd2b_i7seZiZok; m=2258:dXNlcjpwYXNzd29yZA%253D%253D">>},{<<"host">>,<<"localhost:4001">>},{<<"referer">>,<<"http://localhost:4001/admin/notifications_config">>},{<<"sec-fetch-dest">>,<<"document">>},{<<"sec-fetch-mode">>,<<"navigate">>},{<<"sec-fetch-site">>,<<"same-origin">>},{<<"sec-fetch-user">>,<<"?1">>},{<<"upgrade-insecure-requests">>,<<"1">>},{<<"user-agent">>,<<"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36">>}],request_path => <<"/admin/assignations">>,resp_body => nil,resp_cookies => #{},resp_headers => [{<<"cache-control">>,<<"max-age=0, private, must-revalidate">>}],scheme => http,script_name => [],secret_key_base => nil,state => unset,status => nil},[]]}},[]}
+    ancestors: [<0.1199.0>,<0.954.0>,<0.953.0>,'Elixir.GuardianWeb.Endpoint','Elixir.Guardian.Supervisor',<0.904.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.1199.0>,<0.739.0>]
+    dictionary: [{plug_csrf_token_per_host,#{secret_key_base => <<"YTuQJ1TfuZgphFpXg5oX4D3R/Qs9CrV0Q/iHLkcF9v6Wos8v1NpULSvcFBBKkoBQ">>}},{{'Elixir.Guardian.Repo',dynamic_repo},'Elixir.Guardian.Repo'},{logger_metadata,{true,[{request_id,<<"Fk8oColswlUzjsMAACJh">>}]}},{#Ref<0.699356505.3884449793.76321>,{client,undefined,{metrics_ng,metrics_dummy},hackney_tcp,"localhost",3001,<<"localhost:3001">>,[],nil,nil,#Ref<0.699356505.3884449793.76321>,true,hackney_pool,5000,false,5,false,5,nil,nil,nil,{0,{dict,0,16,16,8,80,48,{[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]},{{[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]}}}},undefined,start,nil,normal,false,false,false,undefined,false,nil,waiting,nil,4096,<<>>,[],undefined,nil,nil,nil,nil,undefined,nil}}]
+    trap_exit: false
+    status: running
+    heap_size: 6772
+    stack_size: 27
+    reductions: 178892
+  neighbours:
+2020-12-09 18:00:18 =ERROR REPORT====
+Ranch listener 'Elixir.GuardianWeb.Endpoint.HTTP', connection process <0.1199.0>, stream 1 had its request process <0.1201.0> exit with reason {{#{'__exception__' => true,'__struct__' => 'Elixir.MatchError',term => {error,#{'__exception__' => true,'__struct__' => 'Elixir.HTTPoison.Error',id => nil,reason => econnrefused}}},[{'Elixir.Guardian.AssignationsReportAdmin',assignations_report,1,[{file,"lib/guardian/assignations_report_admin.ex"},{line,9}]},{'Elixir.GuardianWeb.Admin.AssignationsReportController',index,3,[{file,"lib/guardian_web/controllers/admin/assignations_report_controller.ex"},{line,13}]},{'Elixir.GuardianWeb.Admin.AssignationsReportController',action,2,[{file,"lib/guardian_web/controllers/admin/assignations_report_controller.ex"},{line,1}]},{'Elixir.GuardianWeb.Admin.AssignationsReportController',phoenix_controller_pipeline,2,[{file,"lib/guardian_web/controllers/admin/assignations_report_controller.ex"},{line,1}]},{'Elixir.Phoenix.Router','__call__',2,[{file,"lib/phoenix/router.ex"},{line,352}]},{'Elixir.GuardianWeb.Endpoint',plug_builder_call,2,[{file,"lib/guardian_web/endpoint.ex"},{line,1}]},{'Elixir.GuardianWeb.Endpoint','call (overridable 3)',2,[{file,"lib/plug/debugger.ex"},{line,132}]},{'Elixir.GuardianWeb.Endpoint',call,2,[{file,"lib/guardian_web/endpoint.ex"},{line,1}]},{'Elixir.Phoenix.Endpoint.Cowboy2Handler',init,4,[{file,"lib/phoenix/endpoint/cowboy2_handler.ex"},{line,65}]},{cowboy_handler,execute,2,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_handler.erl"},{line,37}]},{cowboy_stream_h,execute,3,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_stream_h.erl"},{line,300}]},{cowboy_stream_h,request_process,3,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_stream_h.erl"},{line,291}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]},{'Elixir.GuardianWeb.Endpoint',call,[#{'__struct__' => 'Elixir.Plug.Conn',adapter => {'Elixir.Plug.Cowboy.Conn',#{bindings => #{},body_length => 0,cert => undefined,has_body => false,headers => #{<<"accept">> => <<"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9">>,<<"accept-encoding">> => <<"gzip, deflate, br">>,<<"accept-language">> => <<"es-419,es;q=0.9,en;q=0.8">>,<<"connection">> => <<"keep-alive">>,<<"cookie">> => <<"_guardian_key=SFMyNTY.g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYcjdYQXl5dUJHcjJXX0V5UkdONXBpdW5UbQAAAA5saXZlX3NvY2tldF9pZG0AAAA7dXNlcnNfc2Vzc2lvbnM6bVpGM2NDN0I3a1ZyU3RkY3FTQ3ZoMjBSTk10VHp6Y0xNVE5XN2ZaWHZPaz1tAAAACnVzZXJfdG9rZW5tAAAAIJmRd3Auwe5Fa0rXXKkgr4dtETTLU883CzEzVu32V7zp.I0lvq48IKfU7SDl4EZeXUU0uuf53btd2b_i7seZiZok; m=2258:dXNlcjpwYXNzd29yZA%253D%253D">>,<<"host">> => <<"localhost:4001">>,<<"referer">> => <<"http://localhost:4001/admin/notifications_config">>,<<"sec-fetch-dest">> => <<"document">>,<<"sec-fetch-mode">> => <<"navigate">>,<<"sec-fetch-site">> => <<"same-origin">>,<<"sec-fetch-user">> => <<"?1">>,<<"upgrade-insecure-requests">> => <<"1">>,<<"user-agent">> => <<"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36">>},host => <<"localhost">>,host_info => undefined,method => <<"GET">>,path => <<"/admin/assignations">>,path_info => undefined,peer => {{127,0,0,1},51474},pid => <0.1199.0>,port => 4001,qs => <<>>,ref => 'Elixir.GuardianWeb.Endpoint.HTTP',scheme => <<"http">>,sock => {{127,0,0,1},4001},streamid => 1,version => 'HTTP/1.1'}},assigns => #{},before_send => [],body_params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => body_params},cookies => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => cookies},halted => false,host => <<"localhost">>,method => <<"GET">>,owner => <0.1201.0>,params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => params},path_info => [<<"admin">>,<<"assignations">>],path_params => #{},port => 4001,private => #{},query_params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => query_params},query_string => <<>>,remote_ip => {127,0,0,1},req_cookies => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => cookies},req_headers => [{<<"accept">>,<<"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9">>},{<<"accept-encoding">>,<<"gzip, deflate, br">>},{<<"accept-language">>,<<"es-419,es;q=0.9,en;q=0.8">>},{<<"connection">>,<<"keep-alive">>},{<<"cookie">>,<<"_guardian_key=SFMyNTY.g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYcjdYQXl5dUJHcjJXX0V5UkdONXBpdW5UbQAAAA5saXZlX3NvY2tldF9pZG0AAAA7dXNlcnNfc2Vzc2lvbnM6bVpGM2NDN0I3a1ZyU3RkY3FTQ3ZoMjBSTk10VHp6Y0xNVE5XN2ZaWHZPaz1tAAAACnVzZXJfdG9rZW5tAAAAIJmRd3Auwe5Fa0rXXKkgr4dtETTLU883CzEzVu32V7zp.I0lvq48IKfU7SDl4EZeXUU0uuf53btd2b_i7seZiZok; m=2258:dXNlcjpwYXNzd29yZA%253D%253D">>},{<<"host">>,<<"localhost:4001">>},{<<"referer">>,<<"http://localhost:4001/admin/notifications_config">>},{<<"sec-fetch-dest">>,<<"document">>},{<<"sec-fetch-mode">>,<<"navigate">>},{<<"sec-fetch-site">>,<<"same-origin">>},{<<"sec-fetch-user">>,<<"?1">>},{<<"upgrade-insecure-requests">>,<<"1">>},{<<"user-agent">>,<<"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36">>}],request_path => <<"/admin/assignations">>,resp_body => nil,resp_cookies => #{},resp_headers => [{<<"cache-control">>,<<"max-age=0, private, must-revalidate">>}],scheme => http,script_name => [],secret_key_base => nil,state => unset,status => nil},[]]}} and stacktrace []
+2020-12-09 18:01:51 =CRASH REPORT====
+  crasher:
+    initial call: cowboy_stream_h:request_process/3
+    pid: <0.1227.0>
+    registered_name: []
+    exception exit: {{{#{'__exception__' => true,'__struct__' => 'Elixir.MatchError',term => {error,#{'__exception__' => true,'__struct__' => 'Elixir.HTTPoison.Error',id => nil,reason => econnrefused}}},[{'Elixir.Guardian.InvoicesAdmin',get_invoices,3,[{file,"lib/guardian/invoices_admin.ex"},{line,7}]},{'Elixir.GuardianWeb.Admin.InvoicesController',index,3,[{file,"lib/guardian_web/controllers/admin/invoices_controller.ex"},{line,16}]},{'Elixir.GuardianWeb.Admin.InvoicesController',action,2,[{file,"lib/guardian_web/controllers/admin/invoices_controller.ex"},{line,1}]},{'Elixir.GuardianWeb.Admin.InvoicesController',phoenix_controller_pipeline,2,[{file,"lib/guardian_web/controllers/admin/invoices_controller.ex"},{line,1}]},{'Elixir.Phoenix.Router','__call__',2,[{file,"lib/phoenix/router.ex"},{line,352}]},{'Elixir.GuardianWeb.Endpoint',plug_builder_call,2,[{file,"lib/guardian_web/endpoint.ex"},{line,1}]},{'Elixir.GuardianWeb.Endpoint','call (overridable 3)',2,[{file,"lib/plug/debugger.ex"},{line,132}]},{'Elixir.GuardianWeb.Endpoint',call,2,[{file,"lib/guardian_web/endpoint.ex"},{line,1}]},{'Elixir.Phoenix.Endpoint.Cowboy2Handler',init,4,[{file,"lib/phoenix/endpoint/cowboy2_handler.ex"},{line,65}]},{cowboy_handler,execute,2,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_handler.erl"},{line,37}]},{cowboy_stream_h,execute,3,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_stream_h.erl"},{line,300}]},{cowboy_stream_h,request_process,3,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_stream_h.erl"},{line,291}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]},{'Elixir.GuardianWeb.Endpoint',call,[#{'__struct__' => 'Elixir.Plug.Conn',adapter => {'Elixir.Plug.Cowboy.Conn',#{bindings => #{},body_length => 0,cert => undefined,has_body => false,headers => #{<<"accept">> => <<"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9">>,<<"accept-encoding">> => <<"gzip, deflate, br">>,<<"accept-language">> => <<"es-419,es;q=0.9,en;q=0.8">>,<<"connection">> => <<"keep-alive">>,<<"cookie">> => <<"_guardian_key=SFMyNTY.g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYcjdYQXl5dUJHcjJXX0V5UkdONXBpdW5UbQAAAA5saXZlX3NvY2tldF9pZG0AAAA7dXNlcnNfc2Vzc2lvbnM6bVpGM2NDN0I3a1ZyU3RkY3FTQ3ZoMjBSTk10VHp6Y0xNVE5XN2ZaWHZPaz1tAAAACnVzZXJfdG9rZW5tAAAAIJmRd3Auwe5Fa0rXXKkgr4dtETTLU883CzEzVu32V7zp.I0lvq48IKfU7SDl4EZeXUU0uuf53btd2b_i7seZiZok; m=2258:dXNlcjpwYXNzd29yZA%253D%253D">>,<<"host">> => <<"localhost:4001">>,<<"referer">> => <<"http://localhost:4001/admin/invoices">>,<<"sec-fetch-dest">> => <<"document">>,<<"sec-fetch-mode">> => <<"navigate">>,<<"sec-fetch-site">> => <<"same-origin">>,<<"sec-fetch-user">> => <<"?1">>,<<"upgrade-insecure-requests">> => <<"1">>,<<"user-agent">> => <<"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36">>},host => <<"localhost">>,host_info => undefined,method => <<"GET">>,path => <<"/admin/invoices">>,path_info => undefined,peer => {{127,0,0,1},51515},pid => <0.1215.0>,port => 4001,qs => <<"params%5Bdate_before%5D=2020-12-07">>,ref => 'Elixir.GuardianWeb.Endpoint.HTTP',scheme => <<"http">>,sock => {{127,0,0,1},4001},streamid => 3,version => 'HTTP/1.1'}},assigns => #{},before_send => [],body_params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => body_params},cookies => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => cookies},halted => false,host => <<"localhost">>,method => <<"GET">>,owner => <0.1227.0>,params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => params},path_info => [<<"admin">>,<<"invoices">>],path_params => #{},port => 4001,private => #{},query_params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => query_params},query_string => <<"params%5Bdate_before%5D=2020-12-07">>,remote_ip => {127,0,0,1},req_cookies => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => cookies},req_headers => [{<<"accept">>,<<"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9">>},{<<"accept-encoding">>,<<"gzip, deflate, br">>},{<<"accept-language">>,<<"es-419,es;q=0.9,en;q=0.8">>},{<<"connection">>,<<"keep-alive">>},{<<"cookie">>,<<"_guardian_key=SFMyNTY.g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYcjdYQXl5dUJHcjJXX0V5UkdONXBpdW5UbQAAAA5saXZlX3NvY2tldF9pZG0AAAA7dXNlcnNfc2Vzc2lvbnM6bVpGM2NDN0I3a1ZyU3RkY3FTQ3ZoMjBSTk10VHp6Y0xNVE5XN2ZaWHZPaz1tAAAACnVzZXJfdG9rZW5tAAAAIJmRd3Auwe5Fa0rXXKkgr4dtETTLU883CzEzVu32V7zp.I0lvq48IKfU7SDl4EZeXUU0uuf53btd2b_i7seZiZok; m=2258:dXNlcjpwYXNzd29yZA%253D%253D">>},{<<"host">>,<<"localhost:4001">>},{<<"referer">>,<<"http://localhost:4001/admin/invoices">>},{<<"sec-fetch-dest">>,<<"document">>},{<<"sec-fetch-mode">>,<<"navigate">>},{<<"sec-fetch-site">>,<<"same-origin">>},{<<"sec-fetch-user">>,<<"?1">>},{<<"upgrade-insecure-requests">>,<<"1">>},{<<"user-agent">>,<<"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36">>}],request_path => <<"/admin/invoices">>,resp_body => nil,resp_cookies => #{},resp_headers => [{<<"cache-control">>,<<"max-age=0, private, must-revalidate">>}],scheme => http,script_name => [],secret_key_base => nil,state => unset,status => nil},[]]}},[]}
+    ancestors: [<0.1215.0>,<0.954.0>,<0.953.0>,'Elixir.GuardianWeb.Endpoint','Elixir.Guardian.Supervisor',<0.904.0>]
+    message_queue_len: 0
+    messages: []
+    links: [<0.1215.0>,<0.739.0>]
+    dictionary: [{plug_csrf_token_per_host,#{secret_key_base => <<"YTuQJ1TfuZgphFpXg5oX4D3R/Qs9CrV0Q/iHLkcF9v6Wos8v1NpULSvcFBBKkoBQ">>}},{#Ref<0.699356505.3884449793.79841>,{client,undefined,{metrics_ng,metrics_dummy},hackney_tcp,"localhost",3000,<<"localhost:3000">>,[],nil,nil,#Ref<0.699356505.3884449793.79841>,true,hackney_pool,5000,false,5,false,5,nil,nil,nil,{0,{dict,0,16,16,8,80,48,{[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]},{{[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]}}}},undefined,start,nil,normal,false,false,false,undefined,false,nil,waiting,nil,4096,<<>>,[],undefined,nil,nil,nil,nil,undefined,nil}},{{'Elixir.Guardian.Repo',dynamic_repo},'Elixir.Guardian.Repo'},{logger_metadata,{true,[{request_id,<<"Fk8oIGARzoWufrkAACMB">>}]}}]
+    trap_exit: false
+    status: running
+    heap_size: 6772
+    stack_size: 27
+    reductions: 181478
+  neighbours:
+2020-12-09 18:01:51 =ERROR REPORT====
+Ranch listener 'Elixir.GuardianWeb.Endpoint.HTTP', connection process <0.1215.0>, stream 3 had its request process <0.1227.0> exit with reason {{#{'__exception__' => true,'__struct__' => 'Elixir.MatchError',term => {error,#{'__exception__' => true,'__struct__' => 'Elixir.HTTPoison.Error',id => nil,reason => econnrefused}}},[{'Elixir.Guardian.InvoicesAdmin',get_invoices,3,[{file,"lib/guardian/invoices_admin.ex"},{line,7}]},{'Elixir.GuardianWeb.Admin.InvoicesController',index,3,[{file,"lib/guardian_web/controllers/admin/invoices_controller.ex"},{line,16}]},{'Elixir.GuardianWeb.Admin.InvoicesController',action,2,[{file,"lib/guardian_web/controllers/admin/invoices_controller.ex"},{line,1}]},{'Elixir.GuardianWeb.Admin.InvoicesController',phoenix_controller_pipeline,2,[{file,"lib/guardian_web/controllers/admin/invoices_controller.ex"},{line,1}]},{'Elixir.Phoenix.Router','__call__',2,[{file,"lib/phoenix/router.ex"},{line,352}]},{'Elixir.GuardianWeb.Endpoint',plug_builder_call,2,[{file,"lib/guardian_web/endpoint.ex"},{line,1}]},{'Elixir.GuardianWeb.Endpoint','call (overridable 3)',2,[{file,"lib/plug/debugger.ex"},{line,132}]},{'Elixir.GuardianWeb.Endpoint',call,2,[{file,"lib/guardian_web/endpoint.ex"},{line,1}]},{'Elixir.Phoenix.Endpoint.Cowboy2Handler',init,4,[{file,"lib/phoenix/endpoint/cowboy2_handler.ex"},{line,65}]},{cowboy_handler,execute,2,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_handler.erl"},{line,37}]},{cowboy_stream_h,execute,3,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_stream_h.erl"},{line,300}]},{cowboy_stream_h,request_process,3,[{file,"/Users/juanvico/Documents/Projects/facultad/asp/guardian/errors/deps/cowboy/src/cowboy_stream_h.erl"},{line,291}]},{proc_lib,init_p_do_apply,3,[{file,"proc_lib.erl"},{line,249}]}]},{'Elixir.GuardianWeb.Endpoint',call,[#{'__struct__' => 'Elixir.Plug.Conn',adapter => {'Elixir.Plug.Cowboy.Conn',#{bindings => #{},body_length => 0,cert => undefined,has_body => false,headers => #{<<"accept">> => <<"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9">>,<<"accept-encoding">> => <<"gzip, deflate, br">>,<<"accept-language">> => <<"es-419,es;q=0.9,en;q=0.8">>,<<"connection">> => <<"keep-alive">>,<<"cookie">> => <<"_guardian_key=SFMyNTY.g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYcjdYQXl5dUJHcjJXX0V5UkdONXBpdW5UbQAAAA5saXZlX3NvY2tldF9pZG0AAAA7dXNlcnNfc2Vzc2lvbnM6bVpGM2NDN0I3a1ZyU3RkY3FTQ3ZoMjBSTk10VHp6Y0xNVE5XN2ZaWHZPaz1tAAAACnVzZXJfdG9rZW5tAAAAIJmRd3Auwe5Fa0rXXKkgr4dtETTLU883CzEzVu32V7zp.I0lvq48IKfU7SDl4EZeXUU0uuf53btd2b_i7seZiZok; m=2258:dXNlcjpwYXNzd29yZA%253D%253D">>,<<"host">> => <<"localhost:4001">>,<<"referer">> => <<"http://localhost:4001/admin/invoices">>,<<"sec-fetch-dest">> => <<"document">>,<<"sec-fetch-mode">> => <<"navigate">>,<<"sec-fetch-site">> => <<"same-origin">>,<<"sec-fetch-user">> => <<"?1">>,<<"upgrade-insecure-requests">> => <<"1">>,<<"user-agent">> => <<"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36">>},host => <<"localhost">>,host_info => undefined,method => <<"GET">>,path => <<"/admin/invoices">>,path_info => undefined,peer => {{127,0,0,1},51515},pid => <0.1215.0>,port => 4001,qs => <<"params%5Bdate_before%5D=2020-12-07">>,ref => 'Elixir.GuardianWeb.Endpoint.HTTP',scheme => <<"http">>,sock => {{127,0,0,1},4001},streamid => 3,version => 'HTTP/1.1'}},assigns => #{},before_send => [],body_params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => body_params},cookies => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => cookies},halted => false,host => <<"localhost">>,method => <<"GET">>,owner => <0.1227.0>,params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => params},path_info => [<<"admin">>,<<"invoices">>],path_params => #{},port => 4001,private => #{},query_params => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => query_params},query_string => <<"params%5Bdate_before%5D=2020-12-07">>,remote_ip => {127,0,0,1},req_cookies => #{'__struct__' => 'Elixir.Plug.Conn.Unfetched',aspect => cookies},req_headers => [{<<"accept">>,<<"text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9">>},{<<"accept-encoding">>,<<"gzip, deflate, br">>},{<<"accept-language">>,<<"es-419,es;q=0.9,en;q=0.8">>},{<<"connection">>,<<"keep-alive">>},{<<"cookie">>,<<"_guardian_key=SFMyNTY.g3QAAAADbQAAAAtfY3NyZl90b2tlbm0AAAAYcjdYQXl5dUJHcjJXX0V5UkdONXBpdW5UbQAAAA5saXZlX3NvY2tldF9pZG0AAAA7dXNlcnNfc2Vzc2lvbnM6bVpGM2NDN0I3a1ZyU3RkY3FTQ3ZoMjBSTk10VHp6Y0xNVE5XN2ZaWHZPaz1tAAAACnVzZXJfdG9rZW5tAAAAIJmRd3Auwe5Fa0rXXKkgr4dtETTLU883CzEzVu32V7zp.I0lvq48IKfU7SDl4EZeXUU0uuf53btd2b_i7seZiZok; m=2258:dXNlcjpwYXNzd29yZA%253D%253D">>},{<<"host">>,<<"localhost:4001">>},{<<"referer">>,<<"http://localhost:4001/admin/invoices">>},{<<"sec-fetch-dest">>,<<"document">>},{<<"sec-fetch-mode">>,<<"navigate">>},{<<"sec-fetch-site">>,<<"same-origin">>},{<<"sec-fetch-user">>,<<"?1">>},{<<"upgrade-insecure-requests">>,<<"1">>},{<<"user-agent">>,<<"Mozilla/5.0 (Macintosh; Intel Mac OS X 11_0_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36">>}],request_path => <<"/admin/invoices">>,resp_body => nil,resp_cookies => #{},resp_headers => [{<<"cache-control">>,<<"max-age=0, private, must-revalidate">>}],scheme => http,script_name => [],secret_key_base => nil,state => unset,status => nil},[]]}} and stacktrace []

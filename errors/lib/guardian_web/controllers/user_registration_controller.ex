@@ -33,7 +33,7 @@ defmodule GuardianWeb.UserRegistrationController do
   end
 
   defp reportNewUserToOrg(organization) do
-    HTTPoison.post("http://localhost:3000/user/#{organization.id}", "", [
+    HTTPoison.post("http://localhost:3000/users/#{organization.id}", "", [
       {"Content-Type", "application/json"}
     ])
   end
