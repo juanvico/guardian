@@ -30,13 +30,13 @@ const getOldUnassignedErrors = async orgId => {
 const getErrorsBetweenDates = (orgId, start, end) => {
   return ErrorModel
     .find({ organization_id: orgId, date: { $gt: start, $lt: end } })
-    .count();
+    .countDocuments();
 };
 
 const getResolvedErrorsBetweenDates = (orgId, start, end) => {
   return ErrorModel
     .find({ organization_id: orgId, date: { $gt: start, $lt: end }, resolved: true })
-    .count();
+    .countDocuments();
 };
 
 const getErrorsBetweenDatesBySeverity = async (orgId, start, end) => {

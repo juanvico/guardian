@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 require('dotenv/config');
 
 const router = require('./routes');
+const { startJobs } = require('./jobs');
 
 const app = express();
 
@@ -21,6 +22,8 @@ mongoose.connect(process.env.DB_URI, {
   useUnifiedTopology: true,
   useCreateIndex: true,
 });
+
+startJobs();
 
 app.use('/', router);
 
