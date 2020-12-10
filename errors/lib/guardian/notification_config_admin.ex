@@ -18,7 +18,7 @@ defmodule Guardian.NotificationConfigAdmin do
 
   defp get_configuration_request(user) do
     HTTPoison.get(
-      "http://localhost:3001/users/configuration/#{user.id}",
+      "http://notifications:3001/users/configuration/#{user.id}",
       [
         {"Content-Type", "application/json"}
       ]

@@ -51,6 +51,7 @@ defmodule GuardianWeb.Router do
     resources "/errors", ErrorController, only: [:index, :show]
     post "/resolved_errors/:id", ResolvedErrorController, :create
     resources "/invitations", InvitationController, except: [:edit, :update]
+    resources "/notifications_config", NotificationConfigController, only: [:index, :create]
   end
 
   scope "/admin", GuardianWeb.Admin, as: :admin do
@@ -59,7 +60,6 @@ defmodule GuardianWeb.Router do
     resources "/errors", ErrorController, except: [:index, :show]
     get "/statistics", StatisticsController, :index
     get "/invoices", InvoicesController, :index
-    resources "/notifications_config", NotificationConfigController, only: [:index, :create]
     resources "/application_keys", ApplicationKeyController
   end
 

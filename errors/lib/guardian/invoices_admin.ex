@@ -12,7 +12,7 @@ defmodule Guardian.InvoicesAdmin do
 
   defp invoices_info(organization, month, year) do
     HTTPoison.get(
-      "http://localhost:3000/invoices/#{organization.id}?month=#{month}&year=#{year}",
+      "http://billing:3000/invoices/#{organization.id}?month=#{month}&year=#{year}",
       [
         {"Content-Type", "application/json"}
       ]

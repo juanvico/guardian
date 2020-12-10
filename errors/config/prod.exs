@@ -10,7 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :guardian, GuardianWeb.Endpoint,
-  url: [host: "www.guardian-prod-arqui-obli.tk", port: 443],
+  url: [host: "http://localhost", port: 4000],
   server: true,
   cache_static_manifest: "priv/static/cache_manifest.json"
 

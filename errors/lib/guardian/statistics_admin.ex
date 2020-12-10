@@ -63,7 +63,7 @@ defmodule Guardian.StatisticsAdmin do
     transformed_end_date = transform_date(end_date)
 
     HTTPoison.get(
-      "http://localhost:3002/statistics/#{organization.id}?start=#{transformed_start_date}&end=#{
+      "http://statistics:3002/statistics/#{organization.id}?start=#{transformed_start_date}&end=#{
         transformed_end_date
       }",
       [

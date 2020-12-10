@@ -3,15 +3,8 @@ defmodule GuardianWeb.Queue do
   require Logger
   alias AMQP.Connection
 
-  # TODO Check env variables
-  @connection_options [
-    host: "localhost",
-    port: 5672,
-    virtual_host: "/",
-    username: "user",
-    password: "password",
-    name: "rabbitmq"
-  ]
+  @connection_url "amqp://user:password@rabbitmq"
+  @port 5672
   @reconnect_interval 10_000
 
   def start_link(opts \\ [name: __MODULE__]) do
@@ -55,7 +48,7 @@ defmodule GuardianWeb.Queue do
   end
 
   def publish(topic, body) do
-    case Connection.open(@connection_options) do
+    case Connection.open(@connection_url, port: @port) do
       {:ok, connection} ->
         {:ok, channel} = AMQP.Channel.open(connection)
         AMQP.Exchange.declare(channel, "topics_guardian", :topic)

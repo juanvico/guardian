@@ -1,20 +1,10 @@
 version: '3.8'
 services:
-  billing:
-    build: ./billing
-    ports:
-      - '3000:3000'
-  statistics:
-    build: ./statistics
-    ports:
-      - '3001:3001'
-  errors:
-    build: ./errors
-    ports:
-      - '4000:4000'
   mongo:
     image: mongo
     restart: always
+    ports:
+      - '27017:27017'
   postgres:
     image: postgres
     restart: always
@@ -31,3 +21,39 @@ services:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=password
     image: 'rabbitmq:3-management'
+  billing:
+    build: ./billing
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+      - rabbitmq
+  notifications:
+    build: ./notifications
+    ports:
+      - '3001:3001'
+    depends_on:
+      - mongo
+      - rabbitmq
+  statistics:
+    build: ./statistics
+    ports:
+      - '3002:3002'
+    depends_on:
+      - mongo
+      - rabbitmq
+  errors:
+    build: ./errors
+    ports:
+      - '4000:4000'
+    environment:
+      MIX_ENV: dev
+      SECRET_KEY_BASE: YTuQJ1TfuZgphFpXg5oX4D3R/Qs9CrV0Q/iHLkcF9v6Wos8v1NpULSvcFBBKkoBQ
+      DB_HOST: 'postgres'
+      DB_INSTANCE: 'guardian_dev'
+      DB_USER: 'postgres'
+      DB_PASSWORD: 'postgres'
+      SEND_GRID_API_KEY: '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'
+    depends_on:
+      - postgres
+      - rabbitmq
