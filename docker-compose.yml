@@ -53,7 +53,7 @@ services:
       DB_INSTANCE: 'guardian_dev'
       DB_USER: 'postgres'
       DB_PASSWORD: 'postgres'
-      SEND_GRID_API_KEY: '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'
+      SEND_GRID_API_KEY: '<Add sendgrid APIKEY>'
       SERVER_KEY: 'Mun42ucruSYwglR68Ec9JF71UpgnrhvbwRA7XUZzU_9JxeI7UEi-cZ6dsG7A8mERpgoFZmDTnelpB5zNw2ATyQ'
     depends_on:
       - postgres
