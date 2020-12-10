@@ -10,7 +10,7 @@ require('dotenv/config');
 
 const router = require('./routes');
 const { startJobs } = require('./jobs');
-const { startListeningQueues } = require('./queues')
+const { startListeningQueues } = require('./queues');
 
 const app = express();
 
@@ -27,7 +27,7 @@ mongoose.connect(process.env.DB_URI, {
 });
 
 startJobs();
-startListeningQueues()
+startListeningQueues();
 
 app.use('/', router);
 
