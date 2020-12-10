@@ -1,11 +1,11 @@
-var amqp = require('amqplib/callback_api');
+const amqp = require('amqplib/callback_api');
 const ErrorController = require('../controllers/error-controller');
 
 const topics = [
   'create_error',
   'update_error',
   'resolve_error',
-]
+];
 
 const startListeningQueues = () => {
   amqp.connect({
@@ -49,12 +49,12 @@ const startListeningQueues = () => {
       });
     });
   });
-}
+};
 
 const topicHandler = {
   'create_error': ErrorController.onErrorAdded,
   'update_error': ErrorController.onErrorUpdated,
   'resolve_error': ErrorController.onErrorResolved,
-}
+};
 
 module.exports = { startListeningQueues };

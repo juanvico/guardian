@@ -9,7 +9,7 @@ const topics = [
   'create_user',
   'update_user',
   'configure_user',
-]
+];
 
 const startListeningQueues = () => {
   amqp.connect({
@@ -53,7 +53,7 @@ const startListeningQueues = () => {
       });
     });
   });
-}
+};
 
 const topicHandler = {
   'create_error': ErrorController.onErrorAdded,
@@ -62,6 +62,6 @@ const topicHandler = {
   'create_user': UserController.onUserAdded,
   'update_user': UserController.onUserUpdated,
   'configure_user': UserController.onConfigurationUpdated,
-}
+};
 
 module.exports = { startListeningQueues };

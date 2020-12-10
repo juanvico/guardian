@@ -5,7 +5,7 @@ const UserService = require('../services/user-service');
 const topics = [
   'users_add',
   'errors_add'
-]
+];
 
 const startListeningQueues = () => {
   amqp.connect({
@@ -49,11 +49,11 @@ const startListeningQueues = () => {
       });
     });
   });
-}
+};
 
 const topicHandler = {
   'errors_add': ({ organization_id: orgId }) => ErrorService.updateOrganizationErrors(orgId),
   'users_add': ({ organization_id: orgId }) => UserService.updateOrganizationUsers(orgId)
-}
+};
 
 module.exports = { startListeningQueues };
