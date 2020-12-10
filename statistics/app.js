@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 require('dotenv/config');
 
 const router = require('./routes');
-const { startListeningQueues } = require('./queues')
+const { startListeningQueues } = require('./queues');
 
 const app = express();
 
@@ -25,7 +25,7 @@ mongoose.connect(process.env.DB_URI, {
   useCreateIndex: true,
 });
 
-startListeningQueues()
+startListeningQueues();
 
 app.use('/', router);
 

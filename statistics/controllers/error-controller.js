@@ -1,6 +1,6 @@
 const ErrorService = require('../services/error-service');
 
-const onErrorAdded = async (errorBody) => {
+const onErrorAdded = async errorBody => {
   const {
     error_id: errorId,
     severity,
@@ -18,7 +18,7 @@ const onErrorAdded = async (errorBody) => {
   });
 };
 
-const onErrorUpdated = async (errorBody) => {
+const onErrorUpdated = async errorBody => {
   const {
     error_id: errorId,
     severity,
@@ -33,7 +33,7 @@ const onErrorUpdated = async (errorBody) => {
   });
 };
 
-const onErrorResolved = async (errorBody) => {
+const onErrorResolved = async errorBody => {
   const { error_id: errorId } = errorBody;
   await ErrorService.updateError({ error_id: errorId }, { resolved: true });
 };
