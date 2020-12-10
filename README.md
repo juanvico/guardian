@@ -34,7 +34,7 @@ Create .env file with the following structure
 ```
 DB_URI=mongodb://mongo:27017/guardian_notifications
 EMAIL_FROM=juanandresvico@hotmail.com
-SENDGRID_API_KEY=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
+SENDGRID_API_KEY=
 SERVER_KEY="Mun42ucruSYwglR68Ec9JF71UpgnrhvbwRA7XUZzU_9JxeI7UEi-cZ6dsG7A8mERpgoFZmDTnelpB5zNw2ATyQ"
 ```
 
