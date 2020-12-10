@@ -2,8 +2,6 @@ const express = require('express');
 const StatisticsController = require('../controllers/statistics-controller');
 const router = express.Router();
 
-router.get('/top_10_developers/:organization_id', StatisticsController.getTop10DevelopersStatistics);
-router.get('/unassigned_errors/:organization_id', StatisticsController.getUnassignedErrorsStatistics);
-router.get('/resolved_errors/:organization_id', StatisticsController.getErrorsBetweenDatesStatistics);
+router.get('/:organization_id', StatisticsController.getOrganizationStatistics);
 
 module.exports = router;

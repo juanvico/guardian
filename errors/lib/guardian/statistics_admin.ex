@@ -3,39 +3,76 @@ defmodule Guardian.StatisticsAdmin do
 
   alias Guardian.Repo
   alias Guardian.Errors.Error
+  alias Guardian.Accounts.User
 
   def get_statistics_report(organization, start_date, end_date) do
-    errors = count_errors_between_dates(organization, start_date, end_date)
-    resolved = count_resolved_errors_between_dates(organization, start_date, end_date)
-    by_severity = count_errors_by_severity_between_dates(organization, start_date, end_date)
+    statistic_response =
+      case get_statistics_report_info(organization, start_date, end_date) do
+        {:ok, statistics} ->
+          case statistics.status_code do
+            code when code in 200..299 -> {:ok, Jason.decode!(statistics.body)}
+            _ -> {:error}
+          end
 
-    %{errors: errors, resolved: resolved, by_severity: by_severity}
+        {:error, _error} ->
+          {:error}
+      end
+
+    if statistic_response != {:error} do
+      {:ok, decoded_statistics} = statistic_response
+
+      top_developers_ids =
+        Enum.map(decoded_statistics["top_developers"], fn developer -> developer["_id"] end)
+
+      unassigned_errors =
+        case decoded_statistics["unassigned_errors"] do
+          [] ->
+            []
+
+          _ ->
+            Error
+            |> where([e], e.id in ^decoded_statistics["unassigned_errors"])
+            |> Repo.all()
+        end
+
+      top_developers =
+        case top_developers_ids do
+          [] ->
+            []
+
+          _ ->
+            User
+            |> where([u], u.id in ^top_developers_ids)
+            |> Repo.all()
+        end
+
+      %{
+        unassigned_errors: unassigned_errors,
+        top_developers: top_developers,
+        by_severity: decoded_statistics["by_severity"],
+        resolved: decoded_statistics["resolved"],
+        total_errors: decoded_statistics["total_errors"]
+      }
+    else
+      {:error}
+    end
   end
 
-  defp count_errors_between_dates(organization, start_date, end_date) do
-    query_errors_between_dates(organization, start_date, end_date)
-    |> select([e], count(e.id))
-    |> Repo.one()
+  defp get_statistics_report_info(organization, start_date, end_date) do
+    transformed_start_date = transform_date(start_date)
+    transformed_end_date = transform_date(end_date)
+
+    HTTPoison.get(
+      "http://localhost:3002/statistics/#{organization.id}?start=#{transformed_start_date}&end=#{
+        transformed_end_date
+      }",
+      [
+        {"Content-Type", "application/json"}
+      ]
+    )
   end
 
-  defp count_resolved_errors_between_dates(organization, start_date, end_date) do
-    query_errors_between_dates(organization, start_date, end_date)
-    |> where(resolved: true)
-    |> select([e], count(e.id))
-    |> Repo.one()
-  end
-
-  defp count_errors_by_severity_between_dates(organization, start_date, end_date) do
-    query_errors_between_dates(organization, start_date, end_date)
-    |> group_by([e], e.severity)
-    |> select([e], %{severity: e.severity, total_errors: count(e.id)})
-    |> Repo.all()
-  end
-
-  defp query_errors_between_dates(organization, start_date, end_date) do
-    Error
-    |> where([e], fragment("?::date", e.inserted_at) > ^start_date)
-    |> where([e], fragment("?::date", e.inserted_at) < ^end_date)
-    |> where(organization_id: ^organization.id)
+  defp transform_date(date) do
+    Date.to_string(date)
   end
 end

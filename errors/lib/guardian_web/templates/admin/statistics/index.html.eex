@@ -18,23 +18,54 @@
 
     </section>
 
-   <section id="torch-table">
-      <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
-        <label style="font-size: 30px; text-align: center;">Total errors</label>
-        <p style="font-size: 80px; text-align: center; color: #a94442;"><%= @errors %></p>
-      </div>
-
-      <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
-        <label style="font-size: 30px; text-align: center;">Resolved errors</label>
-        <p style="font-size: 80px; text-align: center; color: #a94442;"><%= @resolved %></p>
-      </div>
-
-      <%= for i <- 1..4 do %>
+    <div style="display: flex; flex-direction: column">
+      <%= if @error do %>
         <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
-          <label style="font-size: 30px; text-align: center;">Severity <%= i %></label>
-          <p style="font-size: 80px; text-align: center; color: #a94442;"><%= total_errors_for_severity(@by_severity, i) %></p>
+          <label style="font-size: 30px; text-align: center;">Oops there was an error please try again later</label>
         </div>
-      <% end %>
-    </section>
+      <% else  %>
+        <div style="display: flex">
+          <section id="torch-table">
+            <div style="font-size: 30px; padding-bottom: 20px;">Top 10 developers</div>
+            <%= for user <- @top_developers do %>
+              <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+                <p style="font-size: 20px; text-align: center; color: #a94442;"><%= user.name %></p>
+                <p style="font-size: 20px; text-align: center; color: #a94442;"><%= user.email %></p>
+              </div>
+            <% end %>
+          </section>
+
+          <section id="torch-table">
+              <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+                <label style="font-size: 30px; text-align: center;">Total errors</label>
+                <p style="font-size: 80px; text-align: center; color: #a94442;"><%= @total_errors %></p>
+              </div>
+
+              <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+                <label style="font-size: 30px; text-align: center;">Resolved errors</label>
+                <p style="font-size: 80px; text-align: center; color: #a94442;"><%= @resolved %></p>
+              </div>
+
+              <%= for i <- 1..4 do %>
+                <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+                  <label style="font-size: 30px; text-align: center;">Severity <%= i %></label>
+                  <p style="font-size: 80px; text-align: center; color: #a94442;"><%= total_errors_for_severity(@by_severity, i) %></p>
+                </div>
+              <% end %>
+            </section>
+          </div>
+
+          <section id="torch-table">
+            <div style="font-size: 30px; padding-bottom: 20px;">Non asigned errors</div>
+            <%= for error <- @unassigned_errors do %>
+              <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+                <p style="font-size: 20px; text-align: center; color: #a94442;"><%= error.title %></p>
+                <p style="font-size: 20px; text-align: center; color: #a94442;">Severity: <%= error.severity %></p>
+                <p style="font-size: 20px; text-align: center; color: #a94442;">Description: <%= error.description %></p>
+              </div>
+            <% end %>
+          </section>
+        </div>
+      <% end  %>
   </div>
 </section>

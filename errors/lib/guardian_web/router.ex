@@ -51,7 +51,6 @@ defmodule GuardianWeb.Router do
     resources "/errors", ErrorController, only: [:index, :show]
     post "/resolved_errors/:id", ResolvedErrorController, :create
     resources "/invitations", InvitationController, except: [:edit, :update]
-    resources "/assignations", AssignationsReportController, except: [:edit, :update]
   end
 
   scope "/admin", GuardianWeb.Admin, as: :admin do

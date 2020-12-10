@@ -13,14 +13,31 @@ defmodule GuardianWeb.Admin.StatisticsController do
     start_date = transform_date(start_date)
     end_date = transform_date(end_date)
 
-    statistics =
-      StatisticsAdmin.get_statistics_report(current_user.organization, start_date, end_date)
+    case StatisticsAdmin.get_statistics_report(current_user.organization, start_date, end_date) do
+      {:error} ->
+        render(conn, "index.html", %{
+          total_errors: 0,
+          resolved: 0,
+          by_severity: [],
+          unassigned_errors: [],
+          top_developers: [],
+          error: true
+        })
 
-    render(conn, "index.html", statistics)
+      statistics ->
+        render(conn, "index.html", Map.put(statistics, :error, false))
+    end
   end
 
   def index(conn, _params, _current_user) do
-    render(conn, "index.html", %{errors: 0, resolved: 0, by_severity: []})
+    render(conn, "index.html", %{
+      total_errors: 0,
+      resolved: 0,
+      by_severity: [],
+      unassigned_errors: [],
+      top_developers: [],
+      error: false
+    })
   end
 
   defp transform_date(date) do
