@@ -8,6 +8,7 @@ require('dotenv/config');
 
 const router = require('./routes');
 const { startJobs } = require('./jobs');
+const { startListeningQueues } = require('./queues')
 
 const app = express();
 
@@ -24,14 +25,15 @@ mongoose.connect(process.env.DB_URI, {
 });
 
 startJobs();
+startListeningQueues()
 
 app.use('/', router);
 
-app.use(function(_req, _res, next) {
+app.use(function (_req, _res, next) {
   next(createError(404));
 });
 
-app.use(function(err, req, res) {
+app.use(function (err, req, res) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 

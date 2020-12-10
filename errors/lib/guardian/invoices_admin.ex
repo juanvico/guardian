@@ -4,8 +4,10 @@ defmodule Guardian.InvoicesAdmin do
   alias Guardian.Repo
 
   def get_invoices(organization, month, year) do
-    {:ok, response} = invoices_info(organization, month, year)
-    Jason.decode!(response.body)
+    case invoices_info(organization, month, year) do
+      {:ok, invoices_request} -> {:ok, Jason.decode!(invoices_request.body)}
+      {:error, _error} -> {:error}
+    end
   end
 
   defp invoices_info(organization, month, year) do

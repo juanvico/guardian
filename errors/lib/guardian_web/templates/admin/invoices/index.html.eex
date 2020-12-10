@@ -2,9 +2,9 @@
 </section>
 <section id="torch-index-content">
   <div class="torch-container">
+
     <section id="torch-filters">
       <h3>Dates</h3>
-
       <%= form_tag @conn.request_path, method: :get, id: "torch-filters-form" do %>
          <div class="field">
             <label>Date</label>
@@ -15,19 +15,34 @@
           <%= submit "Search" %>
         </div>
       <% end %>
-
-
     </section>
 
     <section id="torch-table">
-      Error Count: <%= @invoice["errorCount"] %></p>
-      Error month: <%= @invoice["month"] %></p>
-      Error orgId: <%= @invoice["orgId"] %></p>
-      Error price: <%= @invoice["price"] %></p>
-      Error pricePerError: <%= @invoice["pricePerError"] %></p>
-      Error pricePerUser: <%= @invoice["pricePerUser"] %></p>
-      Error userCount: <%= @invoice["userCount"] %></p>
-      Error year: <%= @invoice["year"] %></p>
+      <%= if @invoice == nil && !@error do %>
+        <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+           <label style="font-size: 30px; text-align: center;">No invoices for this month and year</label>
+        </div>
+      <% end %>
+      <%= if @invoice != nil && !@error do %>
+        <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; margin-bottom: 20px;">
+            <label style="font-size: 30px; text-align: center;">Total errors: <%= @invoice["errorCount"] %></label>
+            <p style="font-size: 30px; text-align: center; padding: 5px">Total users: <%=  @invoice["userCount"] %></p>
+            <p style="font-size: 30px; text-align: center; padding: 5px">Organization: <%=  @invoice["orgId"] %></p>
+            <p style="font-size: 30px; text-align: center; padding: 5px">Date: <%= @invoice["month"] %>/<%= @invoice["year"] %></p></p>
+            <p style="font-size: 30px; text-align: center; padding: 5px">Price: <%=  @invoice["price"] %></p>
+            <p style="font-size: 30px; text-align: center; padding: 5px">Price per error: <%=  @invoice["pricePerError"] %></p>
+            <p style="font-size: 30px; text-align: center; padding: 5px">Price per user: <%=  @invoice["pricePerUser"] %></p>
+
+        </div>
+      <% end %>
+    </section>
+
+    <section id="torch-table">
+      <%= if @error do %>
+        <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+           <label style="font-size: 30px; text-align: center;">Opps there was a problem, please try again later</label>
+        </div>
+      <% end %>
     </section>
   </div>
 </section>
