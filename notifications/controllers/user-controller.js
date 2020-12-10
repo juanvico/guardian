@@ -43,10 +43,13 @@ const onConfigurationUpdated = async (configurationBody) => {
 };
 
 const getConfiguration = async (req, res) => {
+  if (req.headers['server-key'] !== process.env.SERVER_KEY) {
+    return res.status(401).send('Unauthorized')
+  }
   const { user_id: userId } = req.params;
   const configuration = await UserService.getConfiguration(userId);
 
-  res.send({ configuration });
+  return res.send({ configuration });
 };
 
 module.exports = {

@@ -17,6 +17,7 @@ const getTop10DevelopersWithMostResolved = orgId => {
         count: { $sum: 1 },
       }
     },
+    { $sort: { count: -1 } },
     { $limit: 10 },
   ]);
 };

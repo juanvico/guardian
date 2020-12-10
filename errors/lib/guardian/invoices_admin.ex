@@ -5,8 +5,14 @@ defmodule Guardian.InvoicesAdmin do
 
   def get_invoices(organization, month, year) do
     case invoices_info(organization, month, year) do
-      {:ok, invoices_request} -> {:ok, Jason.decode!(invoices_request.body)}
-      {:error, _error} -> {:error}
+      {:ok, invoices_request} ->
+        case invoices_request.status_code do
+          code when code in 200..299 -> {:ok, Jason.decode!(invoices_request.body)}
+          _ -> {:error}
+        end
+
+      {:error, error} ->
+        {:error}
     end
   end
 
@@ -14,7 +20,8 @@ defmodule Guardian.InvoicesAdmin do
     HTTPoison.get(
       "http://billing:3000/invoices/#{organization.id}?month=#{month}&year=#{year}",
       [
-        {"Content-Type", "application/json"}
+        {"Content-Type", "application/json"},
+        {"Server-key", System.fetch_env!("SERVER_KEY")}
       ]
     )
   end

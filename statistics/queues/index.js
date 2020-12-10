@@ -48,7 +48,7 @@ const startListeningQueues = () => {
       });
     } catch (error) {
       console.log('Error: ', error);
-      console.log('Retry reconnection in 5 seconds ... ');
+      console.log('Retry reconnection in 10 seconds ... ');
       setTimeout(() => {
         startListeningQueues();
       }, 10000)

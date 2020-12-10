@@ -20,7 +20,8 @@ defmodule Guardian.NotificationConfigAdmin do
     HTTPoison.get(
       "http://notifications:3001/users/configuration/#{user.id}",
       [
-        {"Content-Type", "application/json"}
+        {"Content-Type", "application/json"},
+        {"Server-key", System.fetch_env!("SERVER_KEY")}
       ]
     )
   end

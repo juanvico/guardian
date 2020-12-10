@@ -1,6 +1,9 @@
 const StatisticsService = require('../services/statistics-service');
 
 const getOrganizationStatistics = async (req, res) => {
+  if (req.headers['server-key'] !== process.env.SERVER_KEY) {
+    return res.status(401).send('Unauthorized')
+  }
   const { organization_id: orgId } = req.params;
   const { start, end } = req.query;
   const developersWithMostResolved = await getTop10DevelopersStatistics(orgId)

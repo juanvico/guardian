@@ -46,9 +46,20 @@ defmodule Guardian.StatisticsAdmin do
             |> Repo.all()
         end
 
+
+      top_developers_with_errors =
+        top_developers
+          |> Enum.with_index
+          |> Enum.map(fn {developer, k} -> Map.new(%{
+            name: developer.name,
+            email: developer.email,
+            error_count: Enum.at(decoded_statistics["top_developers"], k)["count"]
+          }) end)
+
+      IO.inspect(top_developers_with_errors)
       %{
         unassigned_errors: unassigned_errors,
-        top_developers: top_developers,
+        top_developers: top_developers_with_errors,
         by_severity: decoded_statistics["by_severity"],
         resolved: decoded_statistics["resolved"],
         total_errors: decoded_statistics["total_errors"]
@@ -67,7 +78,8 @@ defmodule Guardian.StatisticsAdmin do
         transformed_end_date
       }",
       [
-        {"Content-Type", "application/json"}
+        {"Content-Type", "application/json"},
+        {"Server-key", System.fetch_env!("SERVER_KEY")}
       ]
     )
   end

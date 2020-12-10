@@ -31,6 +31,7 @@
               <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
                 <p style="font-size: 20px; text-align: center; color: #a94442;"><%= user.name %></p>
                 <p style="font-size: 20px; text-align: center; color: #a94442;"><%= user.email %></p>
+                <p style="font-size: 20px; text-align: center; color: #a94442;">Total <%= user.error_count %></p>
               </div>
             <% end %>
           </section>
