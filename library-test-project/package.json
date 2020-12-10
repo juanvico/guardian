@@ -1,6 +1,6 @@
 {
-  "name": "centinelajs",
-  "version": "2.0.2",
+  "name": "library-test-project",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.21.0"
+    "centinelajs": "^2.0.2",
+    "dotenv": "^8.2.0"
   }
 }

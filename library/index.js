@@ -1,34 +1,19 @@
-const http = require('http');
-require('dotenv/config');
+const axios = require('axios').default;
 
-const options = {
-  host: process.env.API_URL,
-  path: '/errors',
-  method: 'POST',
-  headers: {},
-};
-
+let httpClient;
 let apiKey = '';
 
 const init = ({ key }) => {
   apiKey = key;
-  options.headers['application-key'] = apiKey;
+  httpClient = axios.create({
+    baseURL: 'http://localhost:4000/api/v1',
+    timeout: 1000,
+    headers: { 'application-key': apiKey },
+  });
 };
 
 const createError = ({ title, assignedDeveloper, description, severity }) => {
-  return new Promise((resolve, reject) => {
-    const req = http.request(options, res => {
-      res.on('end', () => {
-        resolve();
-      });
-    });
-
-    req.on('error', err => {
-      reject(err);
-    });
-
-    req.end();
-  });
+  return httpClient.post('/errors', { error: { title, assignedDeveloper, description, severity } });
 };
 
 module.exports = {
