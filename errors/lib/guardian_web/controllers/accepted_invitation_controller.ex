@@ -6,6 +6,9 @@ defmodule GuardianWeb.AcceptedInvitationController do
   alias Guardian.Invitations
   alias Guardian.Invitations.Invitation
   alias GuardianWeb.UserAuth
+  alias GuardianWeb.Queue
+
+  @topic_users_add "users_add"
 
   def new(conn, %{"token" => token}, nil) do
     case Invitations.get_invitation_by_token(token) do
@@ -62,8 +65,8 @@ defmodule GuardianWeb.AcceptedInvitationController do
   end
 
   defp reportNewUserToOrg(organization) do
-    HTTPoison.post("http://localhost:3000/user/#{organization.id}", "", [
-      {"Content-Type", "application/json"}
-    ])
+    Queue.publish(@topic_users_add, Jason.encode!(%{
+      "org_id" => organization.id
+    }))
   end
 end

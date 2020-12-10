@@ -4,8 +4,10 @@ defmodule GuardianWeb.Admin.ErrorController do
   alias Guardian.ErrorsAdmin
   alias Guardian.Errors.Error
   alias Guardian.Accounts
+  alias GuardianWeb.Queue
 
   plug(:put_root_layout, {GuardianWeb.LayoutView, "torch.html"})
+  @topic_update_error "update_error"
 
   def index(conn, params) do
     params =
@@ -76,14 +78,15 @@ defmodule GuardianWeb.Admin.ErrorController do
   end
 
   defp reportError(error) do
-    HTTPoison.patch("http://localhost:3001/errors/#{error.id}", Jason.encode!(%{
+    Queue.publish(@topic_update_error, Jason.encode!(%{
+      "error_id" => error.id,
       "severity" => error.severity,
       "resolved" => error.resolved,
+      "description" => error.description,
+      "title" => error.title,
       "assigned_developer" => error.assignee_id,
       "org_id" => error.organization_id
-    }), [
-      {"Content-Type", "application/json"}
-    ])
+    }))
   end
 
 end

@@ -2,6 +2,9 @@ defmodule GuardianWeb.Admin.ResolvedErrorController do
   use GuardianWeb, :controller
 
   alias Guardian.ErrorsAdmin
+  alias GuardianWeb.Queue
+
+  @topic_resolve_error "resolve_error"
 
   def create(conn, %{"id" => id}) do
     error = ErrorsAdmin.get_error!(id)
@@ -13,8 +16,8 @@ defmodule GuardianWeb.Admin.ResolvedErrorController do
   end
 
   defp reportError(error) do
-    HTTPoison.patch("http://localhost:3001/errors/#{error.id}/resolved", "", [
-      {"Content-Type", "application/json"}
-    ])
+     Queue.publish(@topic_resolve_error, Jason.encode!(%{
+      "error_id" => error.id
+     }))
   end
 end

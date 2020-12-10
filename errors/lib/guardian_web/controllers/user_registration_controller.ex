@@ -4,6 +4,9 @@ defmodule GuardianWeb.UserRegistrationController do
   alias Guardian.Accounts
   alias Guardian.Accounts.User
   alias GuardianWeb.UserAuth
+  alias GuardianWeb.Queue
+
+  @topic_user_add "users_add"
 
   def new(conn, _params) do
     changeset = Accounts.change_user_registration(%User{})
@@ -33,8 +36,8 @@ defmodule GuardianWeb.UserRegistrationController do
   end
 
   defp reportNewUserToOrg(organization) do
-    HTTPoison.post("http://localhost:3000/users/#{organization.id}", "", [
-      {"Content-Type", "application/json"}
-    ])
+    Queue.publish(@topic_user_add, Jason.encode!(%{
+      "org_id" => organization.id
+    }))
   end
 end

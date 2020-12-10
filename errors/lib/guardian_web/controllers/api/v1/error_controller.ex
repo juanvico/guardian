@@ -6,8 +6,12 @@ defmodule GuardianWeb.Api.V1.ErrorController do
   alias GuardianWeb.Mailer
   alias GuardianWeb.ErrorEmail
   alias Guardian.Accounts
+  alias GuardianWeb.Queue
 
   action_fallback GuardianWeb.FallbackController
+
+  @topic_error_add "errors_add"
+  @topic_create_error "create_error"
 
   def index(conn, _, application_key) do
     {_status, {:ok, errors}} =
@@ -39,16 +43,18 @@ defmodule GuardianWeb.Api.V1.ErrorController do
   end
 
   defp reportError(error, organization) do
-    HTTPoison.post("http://localhost:3000/errors/#{organization.id}", "", [
-      {"Content-Type", "application/json"}
-    ])
-    HTTPoison.post("http://localhost:3001/errors/#{error.id}", Jason.encode!(%{
+    Queue.publish(@topic_create_error, Jason.encode!(%{
+      "error_id" => error.id,
       "severity" => error.severity,
       "resolved" => error.resolved,
+      "org_id" => organization.id,
+      "description" => error.description,
+      "assigned_developer" => error.assignee_id,
+      "title" => error.title
+    }))
+    Queue.publish(@topic_error_add, Jason.encode!(%{
       "org_id" => organization.id
-    }), [
-      {"Content-Type", "application/json"}
-    ])
+    }))
   end
 
 end
