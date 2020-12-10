@@ -27,7 +27,7 @@ mongoose.connect(process.env.DB_URI, {
 });
 
 startJobs();
-// startListeningQueues()
+startListeningQueues()
 
 app.use('/', router);
 
