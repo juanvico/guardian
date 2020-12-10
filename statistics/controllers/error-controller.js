@@ -6,7 +6,7 @@ const onErrorAdded = async (req, res) => {
     severity,
     resolved,
     assigned_developer: assignedDeveloper,
-    org_id: orgId,
+    organization_id: orgId,
   } = req.body;
 
   await ErrorService.addError({

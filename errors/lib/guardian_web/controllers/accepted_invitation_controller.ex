@@ -9,6 +9,7 @@ defmodule GuardianWeb.AcceptedInvitationController do
   alias GuardianWeb.Queue
 
   @topic_users_add "users_add"
+  @topic_create_user "create_user"
 
   def new(conn, %{"token" => token}, nil) do
     case Invitations.get_invitation_by_token(token) do
@@ -40,7 +41,7 @@ defmodule GuardianWeb.AcceptedInvitationController do
         case Accounts.join_through_invitation(organization, Map.put(user_params, "role", role)) do
           {:ok, user} ->
             Invitations.claim_invitation(invitation)
-            reportNewUserToOrg(organization)
+            reportNewUser(organization, user)
 
             conn
             |> delete_session(:invitation_token)
@@ -64,9 +65,21 @@ defmodule GuardianWeb.AcceptedInvitationController do
     |> redirect(to: "/")
   end
 
-  defp reportNewUserToOrg(organization) do
-    Queue.publish(@topic_users_add, Jason.encode!(%{
-      "org_id" => organization.id
-    }))
+  defp reportNewUser(organization, user) do
+    Queue.publish(
+      @topic_users_add,
+      Jason.encode!(%{
+        "organization_id" => organization.id
+      })
+    )
+
+    Queue.publish(
+      @topic_create_user,
+      Jason.encode!(%{
+        "organization_id" => organization.id,
+        "email" => user.email,
+        "user_id" => user.id
+      })
+    )
   end
 end

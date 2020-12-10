@@ -6,20 +6,35 @@
     <section id="torch-table">
 
      <%= form_for @conn, Routes.admin_notification_config_path(@conn, :create), [id: "torch-filters-form", as: :config], fn f -> %>
+        <%= if @error do %>
+          <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; max-width: 300px; margin-bottom: 20px;">
+            <label style="font-size: 30px; text-align: center;">Oops there was an error please try again later</label>
+          </div>
+        <% else  %>
+         <div style="background-color: #f2dede; border: 1px solid #a94442; padding: 30px; display: flex; flex-direction: column; border-radius: 10px; margin-bottom: 20px;">
+            <label style="font-size: 30px; text-align: center;">User Configuration</label>
+             <p style="font-size: 30px; text-align: center; padding: 5px">Severity: <%=  @config["severity_filter"] %></p>
+             <p style="font-size: 30px; text-align: center; padding: 5px">Immediate notification: <%=  @config["immediate_notification"] %></p>
+             <p style="font-size: 30px; text-align: center; padding: 5px">Daily_notification: <%=  @config["daily_notification"] %> <%=  @config["daily_notification_time"] %></p>
+          </div>
 
-        <div class="torch-form-group">
-          <%= label f, :severity %>
-          <%= number_input f, :severity %>
-        </div>
+          <div class="torch-form-group">
+            <%= label f, :severity_filter %>
+            <%= number_input f, :severity_filter %>
+          </div>
 
-        <div class="torch-form-group">
-          <%= time_input f, :time %>
-        </div>
+          <div class="torch-form-group">
+            Immediate notification: <%= checkbox(f, :immediate_notification) %>
+          </div>
 
-        <div class="torch-submit-form">
-          <%= submit "Submit", class: "torch-submit-button" %>
-        </div>
-      </fieldset>
+          <div class="torch-form-group">
+            Daily_notification: <%= checkbox(f, :daily_notification) %> <%= time_input f, :daily_notification_time %>
+          </div>
+
+          <div class="torch-submit-form">
+            <%= submit "Submit", class: "torch-submit-button" %>
+          </div>
+        <% end %>
     <% end %>
     </section>
   </div>

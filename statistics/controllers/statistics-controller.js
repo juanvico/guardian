@@ -1,21 +1,21 @@
 const StatisticsService = require('../services/statistics-service');
 
 const getTop10DevelopersStatistics = async (req, res) => {
-  const { org_id: orgId } = req.params;
+  const { organization_id: orgId } = req.params;
   const statistics = await StatisticsService.getTop10DevelopersWithMostResolved(orgId);
 
   res.send(statistics);
 };
 
 const getUnassignedErrorsStatistics = async (req, res) => {
-  const { org_id: orgId } = req.params; 
+  const { organization_id: orgId } = req.params;
   const statistics = await StatisticsService.getOldUnassignedErrors(orgId);
 
   res.send(statistics);
 };
 
 const getErrorsBetweenDatesStatistics = async (req, res) => {
-  const { org_id: orgId } = req.params;
+  const { organization_id: orgId } = req.params;
   const { start, end } = req.query;
 
   const startDate = new Date(start);

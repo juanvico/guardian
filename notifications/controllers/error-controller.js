@@ -1,16 +1,16 @@
 const ErrorService = require('../services/error-service');
 const NotifierService = require('../services/notifier-service');
 
-const onErrorAdded = async (req, res) => {
-  const { error_id: errorId } = req.params;
+const onErrorAdded = async (errorBody) => {
   const {
+    error_id: errorId,
     severity,
     resolved,
     title,
     description,
     assigned_developer: assignedDeveloper,
-    org_id: orgId,
-  } = req.body;
+    organization_id: orgId,
+  } = errorBody;
 
   const basicError = {
     organization_id: orgId,
@@ -22,32 +22,26 @@ const onErrorAdded = async (req, res) => {
 
   await ErrorService.addError(basicError);
   NotifierService.onErrorAssigned({ ...basicError, title, description });
-
-  res.send({ message: 'Error added successfully' });
 };
 
-const onErrorUpdated = async (req, res) => {
-  const { error_id: errorId } = req.params;
+const onErrorUpdated = async (errorBody) => {
   const {
+    error_id: errorId,
     severity,
     resolved,
     assigned_developer: assignedDeveloper,
-  } = req.body;
+  } = errorBody;
 
   await ErrorService.updateError({ error_id: errorId }, {
     severity,
     resolved,
     assigned_developer: assignedDeveloper,
   });
-
-  res.send({ message: 'Error updated successfully' });
 };
 
-const onErrorResolved = async (req, res) => {
-  const { error_id: errorId } = req.params;
+const onErrorResolved = async (errorBody) => {
+  const { error_id: errorId } = errorBody;
   await ErrorService.updateError({ error_id: errorId }, { resolved: true });
-
-  res.send({ message: 'Error resolved successfully' });
 };
 
 module.exports = {

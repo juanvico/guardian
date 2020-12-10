@@ -1,11 +1,11 @@
 const UserService = require('../services/user-service');
 
-const onUserAdded = async (req, res) => {
-  const { user_id: userId } = req.params;
+const onUserAdded = async (userBody) => {
   const {
+    user_id: userId,
     email,
     organization_id: orgId,
-  } = req.body;
+  } = userBody;
 
   await UserService.addUser({
     organization_id: orgId,
@@ -14,28 +14,25 @@ const onUserAdded = async (req, res) => {
     configuration: {},
   });
 
-  res.send({ message: 'User added successfully' });
 };
 
-const onUserUpdated = async (req, res) => {
-  const { user_id: userId } = req.params;
+const onUserUpdated = async (userBody) => {
   const {
+    user_id: userId,
     email,
-  } = req.body;
+  } = userBody;
 
   await UserService.updateUser(userId, { email });
-
-  res.send({ message: 'User updated successfully' });
 };
 
-const onConfigurationUpdated = async (req, res) => {
-  const { user_id: userId } = req.params;
+const onConfigurationUpdated = async (configurationBody) => {
   const {
+    user_id: userId,
     severity_filter,
     immediate_notification,
     daily_notification,
     daily_notification_time,
-  } = req.body;
+  } = configurationBody;
 
   await UserService.updateConfiguration(userId, {
     severity_filter,
@@ -43,8 +40,6 @@ const onConfigurationUpdated = async (req, res) => {
     daily_notification,
     daily_notification_time,
   });
-
-  res.send({ message: 'Configuration updated successfully' });
 };
 
 const getConfiguration = async (req, res) => {

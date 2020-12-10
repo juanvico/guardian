@@ -3,8 +3,11 @@ defmodule GuardianWeb.UserSettingsController do
 
   alias Guardian.Accounts
   alias GuardianWeb.UserAuth
+  alias GuardianWeb.Queue
 
   plug :assign_email_and_password_changesets
+
+  @topic_update_user "update_user"
 
   def edit(conn, _params) do
     render(conn, "edit.html")
@@ -36,6 +39,8 @@ defmodule GuardianWeb.UserSettingsController do
   def confirm_email(conn, %{"token" => token}) do
     case Accounts.update_user_email(conn.assigns.current_user, token) do
       :ok ->
+        reportUserUpdate(conn.assigns.current_user)
+
         conn
         |> put_flash(:info, "Email changed successfully.")
         |> redirect(to: Routes.user_settings_path(conn, :edit))
@@ -68,5 +73,15 @@ defmodule GuardianWeb.UserSettingsController do
     conn
     |> assign(:email_changeset, Accounts.change_user_email(user))
     |> assign(:password_changeset, Accounts.change_user_password(user))
+  end
+
+  defp reportUserUpdate(user) do
+    Queue.publish(
+      @topic_update_user,
+      Jason.encode!(%{
+        "email" => user.email,
+        "user_id" => user.id
+      })
+    )
   end
 end

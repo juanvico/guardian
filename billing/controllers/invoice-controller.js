@@ -1,7 +1,7 @@
 const InvoiceService = require('../services/invoice-service');
 
 const getInvoiceByOrganizationAndDate = async (req, res) => {
-  const { org_id: orgId } = req.params;
+  const { organization_id: orgId } = req.params;
   const { month, year } = req.query;
 
   const now = new Date();

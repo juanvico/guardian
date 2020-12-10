@@ -2,6 +2,6 @@ const express = require('express');
 const UserController = require('../controllers/user-controller');
 const router = express.Router();
 
-router.post('/:org_id', UserController.onUserAdded);
+router.post('/:organization_id', UserController.onUserAdded);
 
 module.exports = router;

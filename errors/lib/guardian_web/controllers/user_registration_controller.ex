@@ -7,6 +7,7 @@ defmodule GuardianWeb.UserRegistrationController do
   alias GuardianWeb.Queue
 
   @topic_user_add "users_add"
+  @topic_create_user "create_user"
 
   def new(conn, _params) do
     changeset = Accounts.change_user_registration(%User{})
@@ -18,7 +19,7 @@ defmodule GuardianWeb.UserRegistrationController do
 
     case Accounts.register_user(user_params, organization_params || %{}) do
       {:ok, user} ->
-        reportNewUserToOrg(user.organization)
+        reportNewUser(user.organization, user)
 
         {:ok, _} =
           Accounts.deliver_user_confirmation_instructions(
@@ -35,9 +36,21 @@ defmodule GuardianWeb.UserRegistrationController do
     end
   end
 
-  defp reportNewUserToOrg(organization) do
-    Queue.publish(@topic_user_add, Jason.encode!(%{
-      "org_id" => organization.id
-    }))
+  defp reportNewUser(organization, user) do
+    Queue.publish(
+      @topic_user_add,
+      Jason.encode!(%{
+        "organization_id" => organization.id
+      })
+    )
+
+    Queue.publish(
+      @topic_create_user,
+      Jason.encode!(%{
+        "organization_id" => organization.id,
+        "email" => user.email,
+        "user_id" => user.id
+      })
+    )
   end
 end

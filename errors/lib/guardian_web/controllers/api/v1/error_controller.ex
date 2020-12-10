@@ -43,18 +43,24 @@ defmodule GuardianWeb.Api.V1.ErrorController do
   end
 
   defp reportError(error, organization) do
-    Queue.publish(@topic_create_error, Jason.encode!(%{
-      "error_id" => error.id,
-      "severity" => error.severity,
-      "resolved" => error.resolved,
-      "org_id" => organization.id,
-      "description" => error.description,
-      "assigned_developer" => error.assignee_id,
-      "title" => error.title
-    }))
-    Queue.publish(@topic_error_add, Jason.encode!(%{
-      "org_id" => organization.id
-    }))
-  end
+    Queue.publish(
+      @topic_create_error,
+      Jason.encode!(%{
+        "error_id" => error.id,
+        "severity" => error.severity,
+        "resolved" => error.resolved,
+        "organization_id" => organization.id,
+        "description" => error.description,
+        "assigned_developer" => error.assignee_id,
+        "title" => error.title
+      })
+    )
 
+    Queue.publish(
+      @topic_error_add,
+      Jason.encode!(%{
+        "organization_id" => organization.id
+      })
+    )
+  end
 end

@@ -10,7 +10,9 @@ defmodule GuardianWeb.Admin.AssignationsReportController do
         _params,
         current_user
       ) do
-    %{errors: errors, users: users} = AssignationsReportAdmin.assignations_report(current_user.organization)
+    %{errors: errors, users: users} =
+      AssignationsReportAdmin.assignations_report(current_user.organization)
+
     render(conn, "index.html", %{assignation_report: %{errors: errors, users: users}})
   end
 end

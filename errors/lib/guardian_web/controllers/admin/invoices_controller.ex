@@ -18,14 +18,13 @@ defmodule GuardianWeb.Admin.InvoicesController do
         transformed_date.month,
         transformed_date.year
       )
-    IO.inspect(invoice_response, label: "Response")
+
     if invoice_response == {:error} do
       render(conn, "index.html", %{invoice: %{}, error: true})
     else
-      {:ok, invoice } = invoice_response
-      render(conn, "index.html", %{ invoice: invoice["invoice"], error: false })
+      {:ok, invoice} = invoice_response
+      render(conn, "index.html", %{invoice: invoice["invoice"], error: false})
     end
-
   end
 
   def index(conn, _params, _current_user) do

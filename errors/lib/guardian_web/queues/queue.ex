@@ -3,8 +3,15 @@ defmodule GuardianWeb.Queue do
   require Logger
   alias AMQP.Connection
 
-  #TODO Check env variables
-  @connection_options [host: "localhost", port: 5672, virtual_host: "/", username: "user", password: "password", name: "rabbitmq"]
+  # TODO Check env variables
+  @connection_options [
+    host: "localhost",
+    port: 5672,
+    virtual_host: "/",
+    username: "user",
+    password: "password",
+    name: "rabbitmq"
+  ]
   @reconnect_interval 10_000
 
   def start_link(opts \\ [name: __MODULE__]) do
@@ -53,6 +60,7 @@ defmodule GuardianWeb.Queue do
         {:ok, channel} = AMQP.Channel.open(connection)
         AMQP.Exchange.declare(channel, "topics_guardian", :topic)
         AMQP.Basic.publish(channel, "topics_guardian", topic, body)
+
       {:error, _} ->
         Logger.error("Failed to connect #{@connection_options}. Reconnecting later...")
         # Retry later

@@ -1,10 +1,14 @@
 var amqp = require('amqplib/callback_api');
-const ErrorService = require('../services/error-service');
-const UserService = require('../services/user-service');
+const ErrorController = require('../controllers/error-controller');
+const UserController = require('../controllers/user-controller');;
 
 const topics = [
-  'users_add',
-  'errors_add'
+  'create_error',
+  'update_error',
+  'resolve_error',
+  'create_user',
+  'update_user',
+  'configure_user',
 ]
 
 const startListeningQueues = () => {
@@ -52,8 +56,12 @@ const startListeningQueues = () => {
 }
 
 const topicHandler = {
-  'errors_add': ({ organization_id: orgId }) => ErrorService.updateOrganizationErrors(orgId),
-  'users_add': ({ organization_id: orgId }) => UserService.updateOrganizationUsers(orgId)
+  'create_error': ErrorController.onErrorAdded,
+  'update_error': ErrorController.onErrorUpdated,
+  'resolve_error': ErrorController.onErrorResolved,
+  'create_user': UserController.onUserAdded,
+  'update_user': UserController.onUserUpdated,
+  'configure_user': UserController.onConfigurationUpdated,
 }
 
 module.exports = { startListeningQueues };

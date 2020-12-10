@@ -59,6 +59,7 @@ defmodule GuardianWeb.Admin.ErrorController do
     case ErrorsAdmin.update_error(error, error_params) do
       {:ok, error} ->
         reportError(error)
+
         conn
         |> put_flash(:info, "Error updated successfully.")
         |> redirect(to: Routes.admin_error_path(conn, :show, error))
@@ -78,15 +79,17 @@ defmodule GuardianWeb.Admin.ErrorController do
   end
 
   defp reportError(error) do
-    Queue.publish(@topic_update_error, Jason.encode!(%{
-      "error_id" => error.id,
-      "severity" => error.severity,
-      "resolved" => error.resolved,
-      "description" => error.description,
-      "title" => error.title,
-      "assigned_developer" => error.assignee_id,
-      "org_id" => error.organization_id
-    }))
+    Queue.publish(
+      @topic_update_error,
+      Jason.encode!(%{
+        "error_id" => error.id,
+        "severity" => error.severity,
+        "resolved" => error.resolved,
+        "description" => error.description,
+        "title" => error.title,
+        "assigned_developer" => error.assignee_id,
+        "organization_id" => error.organization_id
+      })
+    )
   end
-
 end
