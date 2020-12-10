@@ -1,3 +1,5 @@
+require('newrelic');
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -25,7 +27,7 @@ mongoose.connect(process.env.DB_URI, {
 });
 
 startJobs();
-startListeningQueues()
+// startListeningQueues()
 
 app.use('/', router);
 
